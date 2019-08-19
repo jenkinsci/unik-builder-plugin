@@ -42,7 +42,7 @@ public class UnikBuilder extends Builder {
     }
 
     @Override
-    public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
+    public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws IOException {
         ConsoleLogger clog = new ConsoleLogger(listener);
 
         try {
