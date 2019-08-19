@@ -1,5 +1,6 @@
 package io.jenkins.plugins.unik.cmd;
 
+import com.google.common.base.Strings;
 import hudson.AbortException;
 import hudson.DescriptorExtensionList;
 import hudson.ExtensionPoint;
@@ -7,16 +8,41 @@ import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.Describable;
 import hudson.model.Descriptor;
+import hudson.model.Item;
 import hudson.util.FormValidation;
 import io.jenkins.plugins.unik.UnikBuilder;
+import io.jenkins.plugins.unik.UnikHubEndpoint;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import it.mathiasmah.junik.client.Client;
 import it.mathiasmah.junik.client.exceptions.UnikException;
+import it.mathiasmah.junik.client.models.Hub;
 import jenkins.model.Jenkins;
 
 import static jenkins.model.Jenkins.get;
 
 public abstract class UnikCommand implements Describable<UnikCommand>, ExtensionPoint {
+
+    private UnikHubEndpoint unikHubEndpoint;
+
+    public UnikCommand() {
+        this(null);
+    }
+
+    public UnikCommand(UnikHubEndpoint unikHubEndpoint) {
+        this.unikHubEndpoint = unikHubEndpoint;
+    }
+
+    public UnikHubEndpoint getUnikHubEndpoint() {
+        return unikHubEndpoint;
+    }
+
+    public Hub getUnikHubConfig(Item item) {
+        if (unikHubEndpoint == null || Strings.isNullOrEmpty(unikHubEndpoint.getCredentialsId())) {
+            return null;
+        }
+
+        return unikHubEndpoint.getHub(item);
+    }
 
     public static DescriptorExtensionList<UnikCommand, UnikCommandDescriptor> all() {
         return get().getDescriptorList(UnikCommand.class);
@@ -44,7 +70,15 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
         }
 
         protected UnikCommandDescriptor() {
+        }   public UnikHubEndpoint.DescriptorImpl getUnikHubEndpointDescriptor() {
+            return (UnikHubEndpoint.DescriptorImpl) Jenkins.get().getDescriptor(UnikHubEndpoint.class);
         }
+
+        public boolean showCredentials() {
+            return false;
+        }
+
+
 
     }
 }

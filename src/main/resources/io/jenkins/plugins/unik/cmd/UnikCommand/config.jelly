@@ -3,4 +3,10 @@
 
     <st:include page="config-detail.jelly" optional="true" class="${descriptor.clazz}"/>
 
+    <j:if test="${descriptor.showCredentials()}">
+        <f:entry field="unikHubEndpoint">
+            <f:property propertyDescriptor="${descriptor.unikHubEndpointDescriptor}"/>
+        </f:entry>
+    </j:if>
+
 </j:jelly>

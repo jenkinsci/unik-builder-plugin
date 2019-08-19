@@ -26,9 +26,10 @@ import java.util.logging.Logger;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.kohsuke.stapler.export.ExportInterceptor.LOGGER;
 
 public class UnikBuilder extends Builder {
+
+    private static Logger LOGGER = Logger.getLogger(UnikBuilder.class.getName());
 
     private UnikCommand command;
 
@@ -71,8 +72,6 @@ public class UnikBuilder extends Builder {
 
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> implements Serializable {
-
-        private static Logger LOGGER = Logger.getLogger(UnikBuilder.class.getName());
 
         private Client unikClient;
         private String unikUrl;

@@ -1,0 +1,9 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:c="/lib/credentials">
+    <f:entry field="url" title="${%huburlname}">
+        <f:textbox/>
+    </f:entry>
+    <f:entry field="credentialsId" title="${%Credentials}">
+        <c:select/>
+    </f:entry>
+</j:jelly>
