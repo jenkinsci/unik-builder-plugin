@@ -4,6 +4,7 @@ import hudson.Extension;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.util.FormValidation;
+import io.jenkins.plugins.unik.action.UnikInstanceConsoleAction;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import io.jenkins.plugins.unik.utils.Resolver;
 import io.jenkins.plugins.unik.validator.ValidatorUtils;
@@ -109,14 +110,20 @@ public class RunInstanceCommand extends UnikCommand {
         runInstance.setEnv(resolvePairs(envsRawRes, "="));
         runInstance.setMounts(resolvePairs(mountsRawRes, ":"));
 
-
         Instance instance = getClient().instances().run(runInstance);
         console.logInfo("Instance " + instanceNameRes + "is started");
         console.logInfo(instance.toString());
+
+        if(instance.getId() != null) {
+            attachInstanceOutput(build, instance.getId(), instance.getName());
+            console.logInfo("Attach log action");
+        } else {
+            console.logWarn("Could not attach log action because instance id is null");
+        }
     }
 
     private Map<String, String> resolvePairs(String rawString, String delimiter) {
-        if(rawString == null) {
+        if(StringUtils.isBlank(rawString)) {
             return Collections.emptyMap();
         }
         return Arrays.stream(rawString.split("/n")).collect(Collectors.toMap((m -> m.substring(0, m.indexOf(delimiter) - 1)), (m -> m.substring(m.indexOf(delimiter)))));

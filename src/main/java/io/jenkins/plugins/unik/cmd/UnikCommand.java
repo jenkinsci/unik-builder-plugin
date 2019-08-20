@@ -12,11 +12,14 @@ import hudson.model.Item;
 import hudson.util.FormValidation;
 import io.jenkins.plugins.unik.UnikBuilder;
 import io.jenkins.plugins.unik.UnikHubEndpoint;
+import io.jenkins.plugins.unik.action.UnikInstanceConsoleAction;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import it.mathiasmah.junik.client.Client;
 import it.mathiasmah.junik.client.exceptions.UnikException;
 import it.mathiasmah.junik.client.models.Hub;
 import jenkins.model.Jenkins;
+
+import java.io.IOException;
 
 import static jenkins.model.Jenkins.get;
 
@@ -54,6 +57,16 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
             return descriptor.getUnikClient();
         } else throw new UnikException("Could not create Unik client");
     }
+
+    protected static void attachInstanceOutput(AbstractBuild<?, ?> build, String containerId, String containerName) throws UnikException {
+        try {
+            UnikInstanceConsoleAction outAction = new UnikInstanceConsoleAction(build, containerId, containerName).start();
+            build.addAction(outAction);
+        } catch (IOException e) {
+            throw new UnikException(e.getMessage());
+        }
+    }
+
 
     public abstract void execute(Launcher launcher, AbstractBuild<?, ?> build, ConsoleLogger console)
             throws UnikException, AbortException;
