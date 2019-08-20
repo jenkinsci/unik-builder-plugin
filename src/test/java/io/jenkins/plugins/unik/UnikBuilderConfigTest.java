@@ -35,7 +35,9 @@ public class UnikBuilderConfigTest {
                 new RemoveVolumeCommand("volumeName", true),
                 new RunInstanceCommand("instanceName", "imageName", "100", true, true, "key1=value1 key2=value2", "volume1:mount1 volume2:mount2"),
                 new StartInstanceCommand("instanceName"),
-                new StopInstanceCommand("instanceName")
+                new StopInstanceCommand("instanceName"),
+                new PullImageCommand("imageName", "provider", true, new UnikHubEndpoint("url", "credentialsId")),
+                new PushImageCommand("imageName", new UnikHubEndpoint("url", "credentialsId"))
         );
     }
 

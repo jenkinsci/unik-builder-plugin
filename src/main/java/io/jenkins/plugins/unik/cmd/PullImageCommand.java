@@ -50,7 +50,7 @@ public class PullImageCommand extends UnikCommand {
         }
 
         final String providerRes = Resolver.buildVar(build, provider);
-        if (StringUtils.isBlank(imageNameRes)) {
+        if (StringUtils.isBlank(providerRes)) {
             throw new IllegalArgumentException("Provider can not be empty");
         }
 

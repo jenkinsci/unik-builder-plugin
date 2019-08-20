@@ -78,7 +78,7 @@ public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
         );
 
         if (hub == null) {
-            return null;
+            hub = new Hub();
         }
 
         hub.setUrl(getEffectiveUrl(build));

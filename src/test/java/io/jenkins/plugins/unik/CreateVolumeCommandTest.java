@@ -24,22 +24,22 @@ public class CreateVolumeCommandTest extends AbstractUnikCommandTest {
 
     @Test
     public void testBuildSizeNaNSuccess() throws Exception {
-        successTest(new CreateVolumeCommand("volumeName", "ext2", false, true, "provider", "NaN", "data"),"Not a valid volume size");
+        successTest(new CreateVolumeCommand("volumeName", "ext2", false, true, "provider", "NaN", "data"), "Not a valid volume size");
     }
 
     @Test
     public void testBuildSizeNegativeSuccess() throws Exception {
-        successTest(new CreateVolumeCommand("volumeName", "ext2", false, true, "provider", "-1", "data"),"Not a valid volume size");
+        successTest(new CreateVolumeCommand("volumeName", "ext2", false, true, "provider", "-1", "data"), "Not a valid volume size");
     }
 
     @Test
     public void testBuildMissingDataAndInvalidSizeFailure() throws Exception {
-        failureTest(new CreateVolumeCommand("volumeName", "ext2", true, true, "provider", "NaN", null), "Either a data or a volume size must be specified");
+        failureTest(new CreateVolumeCommand("volumeName", "ext2", true, true, "provider", "NaN", null), "Either a data or a volume size greater 0 must be specified");
     }
 
     @Test
     public void testBuildMissingDataAndSizeFailure() throws Exception {
-        failureTest(new CreateVolumeCommand("volumeName", "ext2", true, true, "provider", null, null), "Either a data or a volume size must be specified");
+        failureTest(new CreateVolumeCommand("volumeName", "ext2", true, true, "provider", null, null), "Either a data or a volume size greater 0 must be specified");
     }
 
     @Test
