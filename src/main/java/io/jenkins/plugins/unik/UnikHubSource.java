@@ -15,7 +15,9 @@ public class UnikHubSource extends AuthenticationTokenSource<Hub, StandardUserna
     @NonNull
     @Override
     public Hub convert(@NonNull StandardUsernamePasswordCredentials credential) throws AuthenticationTokenException {
-        //TODO impl
-        return new Hub();
+        Hub hub = new Hub();
+        hub.setPass(credential.getPassword().getPlainText());
+        hub.setUser(credential.getUsername());
+        return hub;
     }
 }

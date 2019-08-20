@@ -36,12 +36,12 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
         return unikHubEndpoint;
     }
 
-    public Hub getUnikHubConfig(Item item) {
+    public Hub getUnikHubConfig(AbstractBuild<?, ?> build) {
         if (unikHubEndpoint == null || Strings.isNullOrEmpty(unikHubEndpoint.getCredentialsId())) {
             return null;
         }
 
-        return unikHubEndpoint.getHub(item);
+        return unikHubEndpoint.getHub(build);
     }
 
     public static DescriptorExtensionList<UnikCommand, UnikCommandDescriptor> all() {

@@ -76,6 +76,10 @@ public class UnikBuilder extends Builder {
         private Client unikClient;
         private String unikUrl;
 
+        public String getUnikUrl() {
+            return unikUrl;
+        }
+
         public DescriptorImpl() {
             load();
 
@@ -115,10 +119,10 @@ public class UnikBuilder extends Builder {
         public boolean configure(StaplerRequest req, JSONObject formData) throws FormException {
             unikUrl = formData.getString("unikUrl");
 
-            if (isBlank(unikUrl)) {
-                unikUrl = "http://localhost:3000";
-                LOGGER.info("No unik client url configured, using default " + unikUrl);
-            }
+//            if (isBlank(unikUrl)) {
+//                unikUrl = "http://localhost:3000";
+//                LOGGER.info("No unik client url configured, using default " + unikUrl);
+//            }
 
             save();
 

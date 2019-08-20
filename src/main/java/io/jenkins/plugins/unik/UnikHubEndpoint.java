@@ -6,28 +6,32 @@ import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import hudson.Extension;
 import hudson.Util;
-import hudson.model.AbstractDescribableImpl;
-import hudson.model.Descriptor;
-import hudson.model.Item;
-import hudson.model.Queue;
+import hudson.model.*;
 import hudson.model.queue.Tasks;
 import hudson.security.ACL;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
+import io.jenkins.plugins.unik.utils.Resolver;
 import io.jenkins.plugins.unik.validator.ValidatorUtils;
 import it.mathiasmah.junik.client.models.Hub;
 import jenkins.authentication.tokens.api.AuthenticationTokens;
 import jenkins.model.Jenkins;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.StaplerRequest;
 
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-;
+import static org.apache.commons.lang.StringUtils.isBlank;
 
 public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
+
+    private static Logger LOGGER = Logger.getLogger(UnikHubEndpoint.class.getName());
 
     private final String url;
     private final String credentialsId;
@@ -42,30 +46,62 @@ public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
         return url;
     }
 
+    public String getEffectiveUrl(AbstractBuild<?, ?> build) {
+        if (!StringUtils.isBlank(url)) {
+            return Resolver.buildVar(build, url);
+        }
+        return getDescriptor().getDefaultHub();
+    }
+
+
     public String getCredentialsId() {
         return credentialsId;
     }
 
-    public Hub getHub(Item item) {
-        return AuthenticationTokens.convert(
+    public Hub getHub(AbstractBuild<?, ?> build) {
+        AbstractProject<?, ?> job = build.getParent();
+
+        Hub hub = AuthenticationTokens.convert(
                 Hub.class,
                 CredentialsProvider.track(
-                        item,
+                        job,
                         CredentialsMatchers.firstOrNull(
                                 CredentialsProvider.lookupCredentials(
                                         StandardUsernamePasswordCredentials.class,
-                                        item,
-                                        item instanceof Queue.Task ? Tasks.getAuthenticationOf((Queue.Task) item) : ACL.SYSTEM,
+                                        job,
+                                        Tasks.getAuthenticationOf(job),
                                         Collections.emptyList()
                                 ),
                                 CredentialsMatchers.withId(credentialsId)
                         )
                 )
         );
+
+        if (hub == null) {
+            return null;
+        }
+
+        hub.setUrl(getEffectiveUrl(build));
+        return hub;
+    }
+
+    @Override
+    public DescriptorImpl getDescriptor() {
+        return (DescriptorImpl) super.getDescriptor();
     }
 
     @Extension
     public static class DescriptorImpl extends Descriptor<UnikHubEndpoint> {
+
+        private String defaultHub = "http://hub.project-unik.io";
+
+        public DescriptorImpl() {
+            load();
+        }
+
+        public String getDefaultHub() {
+            return defaultHub;
+        }
 
         public String getDisplayName() {
             return Messages.UnikHubEndpoint_DescriptorImpl_DisplayName();
@@ -124,8 +160,20 @@ public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
             return FormValidation.ok();
         }
 
-        public FormValidation doCheckUrl(@QueryParameter String url) {
-            return ValidatorUtils.validateStringNotEmpty(url);
+        public FormValidation doTestConnection(@QueryParameter String hub) {
+            //TODO realy test connection
+            LOGGER.log(Level.WARNING, "Currently no possibility to test hub connection");
+            return FormValidation.ok("Connected to " + hub);
+        }
+
+        @Override
+        public boolean configure(StaplerRequest req, JSONObject formData) throws FormException {
+            defaultHub = formData.getString("hub");
+
+            save();
+
+            return super.configure(req, formData);
+
         }
     }
 }

@@ -37,7 +37,7 @@ public class PushImageCommand extends UnikCommand {
             throw new IllegalArgumentException("Image name can not be empty");
         }
 
-        final Hub hub = getUnikHubConfig(build.getParent());
+        final Hub hub = getUnikHubConfig(build);
         if (hub == null) {
             throw new IllegalArgumentException("Hub config not valid");
         }
