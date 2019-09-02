@@ -12,7 +12,6 @@ import hudson.security.ACL;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import io.jenkins.plugins.unik.utils.Resolver;
-import io.jenkins.plugins.unik.validator.ValidatorUtils;
 import it.mathiasmah.junik.client.models.Hub;
 import jenkins.authentication.tokens.api.AuthenticationTokens;
 import jenkins.model.Jenkins;
@@ -26,8 +25,6 @@ import org.kohsuke.stapler.StaplerRequest;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static org.apache.commons.lang.StringUtils.isBlank;
 
 public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
 

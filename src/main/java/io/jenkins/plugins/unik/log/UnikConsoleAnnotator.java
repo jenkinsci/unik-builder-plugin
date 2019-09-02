@@ -10,9 +10,8 @@ import java.nio.charset.Charset;
 /**
  * Console annotator which annotates Unik messages using {@link UnikConsoleNote}. Annotated message has to start
  * with <i>[Unik]</i> prefix.
- * 
- * @see {@link http://javadoc.jenkins-ci.org/hudson/console/LineTransformationOutputStream.html LineTransformationOutputStream} 
  *
+ * @see {@link http://javadoc.jenkins-ci.org/hudson/console/LineTransformationOutputStream.html LineTransformationOutputStream}
  */
 public class UnikConsoleAnnotator extends LineTransformationOutputStream {
 

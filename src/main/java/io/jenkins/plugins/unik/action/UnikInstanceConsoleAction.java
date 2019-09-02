@@ -1,19 +1,18 @@
 package io.jenkins.plugins.unik.action;
 
 import com.google.common.base.Charsets;
-import com.jcraft.jzlib.GZIPInputStream;
 import hudson.console.AnnotatedLargeText;
 import hudson.model.*;
 import hudson.security.ACL;
 import hudson.security.Permission;
 import io.jenkins.plugins.unik.UnikBuilder;
 import it.mathiasmah.junik.client.Client;
-import jdk.internal.jline.internal.Log;
 import jenkins.model.Jenkins;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.jelly.XMLOutput;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,7 +38,7 @@ public class UnikInstanceConsoleAction extends TaskAction implements Serializabl
 
     @Override
     public String getIconFileName() {
-        return Jenkins.RESOURCE_PATH + "/plugin/unik-plugin/icons/docker-icon-20x20.png";
+        return Jenkins.RESOURCE_PATH + "/plugin/unik-plugin/icons/unik-icon.png";
     }
 
     @Override
@@ -92,7 +91,7 @@ public class UnikInstanceConsoleAction extends TaskAction implements Serializabl
         try {
             obtainLog().writeHtmlTo(offset, out.asWriter());
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE,"Could not write logs",e);
+            LOGGER.log(Level.SEVERE, "Could not write logs", e);
         }
     }
 
@@ -118,7 +117,7 @@ public class UnikInstanceConsoleAction extends TaskAction implements Serializabl
 
             final Client client = ((UnikBuilder.DescriptorImpl) Jenkins.get().getDescriptor(UnikBuilder.class)).getUnikClient();
 
-            client.instances().logsAsStream(instanceId, false,listener.getLogger());
+            client.instances().logsAsStream(instanceId, false, listener.getLogger());
         }
     }
 }

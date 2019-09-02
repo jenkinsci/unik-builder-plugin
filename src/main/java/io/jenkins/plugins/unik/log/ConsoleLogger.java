@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 
 /**
  * A helper class which offers an annotated  log via {@link UnikConsoleAnnotator}.
- **
+ * *
  */
 public class ConsoleLogger {
 
@@ -31,8 +31,7 @@ public class ConsoleLogger {
     /**
      * Logs annotated messages with prifx "[Unik] INFO:"
      *
-     * @param message
-     *            message to be annotated
+     * @param message message to be annotated
      */
     public void logInfo(String message) {
         logAnnot("[Unik] INFO: ", message);
@@ -41,8 +40,7 @@ public class ConsoleLogger {
     /**
      * Logs annotated messages with prifx "[Unik] WARN:"
      *
-     * @param message
-     *            message to be annotated
+     * @param message message to be annotated
      */
     public void logWarn(String message) {
         logAnnot("[Unik] WARN: ", message);
@@ -51,8 +49,7 @@ public class ConsoleLogger {
     /**
      * Logs annotated messages with prifx "[Unik] ERROR:"
      *
-     * @param message
-     *            message to be annotated
+     * @param message message to be annotated
      */
     public void logError(String message) {
         logAnnot("[Unik] ERROR: ", message);

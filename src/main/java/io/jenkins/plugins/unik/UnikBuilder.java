@@ -26,6 +26,11 @@ import java.util.logging.Logger;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
+/**
+ * A build step that lets you select a Unik command for execution
+ *
+ * @see UnikCommand
+ */
 public class UnikBuilder extends Builder {
 
     private static Logger LOGGER = Logger.getLogger(UnikBuilder.class.getName());
@@ -47,10 +52,10 @@ public class UnikBuilder extends Builder {
 
         try {
             getDescriptor().getUnikClient();
-        } catch (UnikException e){
+        } catch (UnikException e) {
             clog.logError("unik client is not created, command '" + command.getDescriptor().getDisplayName()
                     + "' was aborted. Check Jenkins server log why client wasn't created");
-            LOGGER.log(Level.SEVERE,"Failed to execute Unik command " + command.getDescriptor().getDisplayName(),e);
+            LOGGER.log(Level.SEVERE, "Failed to execute Unik command " + command.getDescriptor().getDisplayName(), e);
             throw new AbortException("No Unik client available");
         }
 
@@ -58,7 +63,7 @@ public class UnikBuilder extends Builder {
             command.execute(launcher, build, clog);
         } catch (UnikException e) {
             clog.logError("command '" + command.getDescriptor().getDisplayName() + "' failed: " + e.getMessage());
-            LOGGER.log( Level.SEVERE,"Failed to execute Unik command " + command.getDescriptor().getDisplayName(),e);
+            LOGGER.log(Level.SEVERE, "Failed to execute Unik command " + command.getDescriptor().getDisplayName(), e);
             throw new AbortException(e.getMessage());
         }
         return true;
@@ -75,10 +80,6 @@ public class UnikBuilder extends Builder {
         private Client unikClient;
         private String unikUrl;
 
-        public String getUnikUrl() {
-            return unikUrl;
-        }
-
         public DescriptorImpl() {
             load();
 
@@ -92,6 +93,10 @@ public class UnikBuilder extends Builder {
             } catch (Exception e) {
                 LOGGER.warning("Cannot create Docker client: " + e.getCause());
             }
+        }
+
+        public String getUnikUrl() {
+            return unikUrl;
         }
 
         @Override

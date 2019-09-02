@@ -1,15 +1,12 @@
 package io.jenkins.plugins.unik.cmd;
 
 import com.google.common.base.Strings;
-import hudson.AbortException;
 import hudson.DescriptorExtensionList;
 import hudson.ExtensionPoint;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.Describable;
 import hudson.model.Descriptor;
-import hudson.model.Item;
-import hudson.util.FormValidation;
 import io.jenkins.plugins.unik.UnikBuilder;
 import io.jenkins.plugins.unik.UnikHubEndpoint;
 import io.jenkins.plugins.unik.action.UnikInstanceConsoleAction;
@@ -23,6 +20,9 @@ import java.io.IOException;
 
 import static jenkins.model.Jenkins.get;
 
+/**
+ * Abstract Describable that holds all the general implementation of a Unik Command
+ */
 public abstract class UnikCommand implements Describable<UnikCommand>, ExtensionPoint {
 
     private UnikHubEndpoint unikHubEndpoint;
@@ -35,22 +35,21 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
         this.unikHubEndpoint = unikHubEndpoint;
     }
 
-    public UnikHubEndpoint getUnikHubEndpoint() {
-        return unikHubEndpoint;
-    }
-
-    public Hub getUnikHubConfig(AbstractBuild<?, ?> build) {
-        if (unikHubEndpoint == null || Strings.isNullOrEmpty(unikHubEndpoint.getCredentialsId())) {
-            return null;
-        }
-
-        return unikHubEndpoint.getHub(build);
-    }
-
+    /**
+     * Get the descriptor list of all subtypes
+     *
+     * @return a {@link DescriptorExtensionList} of all subtypes
+     */
     public static DescriptorExtensionList<UnikCommand, UnikCommandDescriptor> all() {
         return get().getDescriptorList(UnikCommand.class);
     }
 
+    /**
+     * Get a client that holds the connection to the Unik server
+     *
+     * @return a {@link Client} that holds the connection to the Unik server
+     * @throws UnikException if no connection could be established
+     */
     public static Client getClient() throws UnikException {
         UnikBuilder.DescriptorImpl descriptor = (UnikBuilder.DescriptorImpl) Jenkins.get().getDescriptor(UnikBuilder.class);
         if (descriptor != null) {
@@ -67,9 +66,34 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
         }
     }
 
+    public UnikHubEndpoint getUnikHubEndpoint() {
+        return unikHubEndpoint;
+    }
 
+    /**
+     * Retrieves the information about the configured Unik Hub
+     *
+     * @param build the current build
+     * @return a {@link Hub} containing the information needed to connect to a Unik Hub
+     */
+    public Hub getUnikHubConfig(AbstractBuild<?, ?> build) {
+        if (unikHubEndpoint == null || Strings.isNullOrEmpty(unikHubEndpoint.getCredentialsId())) {
+            return null;
+        }
+
+        return unikHubEndpoint.getHub(build);
+    }
+
+    /**
+     * Execute the Unik command
+     *
+     * @param launcher the {@link Launcher} of this build
+     * @param build    the current build
+     * @param console  the logger to log to the Jenkins console of this build
+     * @throws UnikException if something went wrong with the execution
+     */
     public abstract void execute(Launcher launcher, AbstractBuild<?, ?> build, ConsoleLogger console)
-            throws UnikException, AbortException;
+            throws UnikException;
 
     @Override
     public Descriptor<UnikCommand> getDescriptor() {
@@ -83,14 +107,20 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
         }
 
         protected UnikCommandDescriptor() {
-        }   public UnikHubEndpoint.DescriptorImpl getUnikHubEndpointDescriptor() {
+        }
+
+        public UnikHubEndpoint.DescriptorImpl getUnikHubEndpointDescriptor() {
             return (UnikHubEndpoint.DescriptorImpl) Jenkins.get().getDescriptor(UnikHubEndpoint.class);
         }
 
+        /**
+         * Set to true if for this command the Unik Hub credentials should be configurable
+         *
+         * @return true if the Unik Hub credentials should be configurable
+         */
         public boolean showCredentials() {
             return false;
         }
-
 
 
     }

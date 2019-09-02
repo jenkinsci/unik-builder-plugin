@@ -14,6 +14,11 @@ import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 
+/**
+ * An implementation of {@link UnikCommand} equivalent to the <i>unik push</i> CLI command
+ *
+ * @see UnikCommand
+ */
 public class PushImageCommand extends UnikCommand {
 
     private String imageName;

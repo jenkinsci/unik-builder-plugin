@@ -7,12 +7,16 @@ import hudson.util.FormValidation;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import io.jenkins.plugins.unik.utils.Resolver;
 import io.jenkins.plugins.unik.validator.ValidatorUtils;
-import it.mathiasmah.junik.client.Client;
 import it.mathiasmah.junik.client.exceptions.UnikException;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 
+/**
+ * An implementation of {@link UnikCommand} equivalent to the <i>unik stop</i> CLI command
+ *
+ * @see UnikCommand
+ */
 public class StopInstanceCommand extends UnikCommand {
 
     private String instanceName;

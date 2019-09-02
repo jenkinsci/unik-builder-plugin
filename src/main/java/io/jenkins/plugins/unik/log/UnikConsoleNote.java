@@ -10,10 +10,10 @@ import hudson.model.Run;
 /**
  * Annotator which adds color highlighting. There are three message categories: error, staring with <i>ERROR:</i> prefix,
  * waring, starting with <i>WARN:</i> prefix, and info, which starts with <i>INFO:</i> prefix.
- * 
- *
  */
 public class UnikConsoleNote extends ConsoleNote<Run<?, ?>> {
+
+    private static final long serialVersionUID = 1L;
 
     @Override
     public ConsoleAnnotator<Run<?, ?>> annotate(Run<?, ?> context, MarkupText text, int charPos) {
@@ -32,6 +32,4 @@ public class UnikConsoleNote extends ConsoleNote<Run<?, ?>> {
             return "Unik Console Note";
         }
     }
-
-    private static final long serialVersionUID = 1L;
 }

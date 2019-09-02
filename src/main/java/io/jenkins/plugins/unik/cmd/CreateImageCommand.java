@@ -19,6 +19,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * An implementation of {@link UnikCommand} equivalent to the <i>unik build</i> CLI command
+ *
+ * @see UnikCommand
+ */
 public class CreateImageCommand extends UnikCommand {
 
     private String unikFolder;
@@ -128,10 +133,10 @@ public class CreateImageCommand extends UnikCommand {
         createImage.setLanguage(languageRes);
         createImage.setNoCleanup(noCleanup);
         createImage.setForce(force);
-        if(argsRawRes != null) {
+        if (argsRawRes != null) {
             createImage.setArgs(Arrays.asList(argsRawRes.split("[ |\n]")));
         }
-        if(mountsRawRes != null) {
+        if (mountsRawRes != null) {
             createImage.setMounts(Arrays.asList(mountsRawRes.split("[ |\n]")));
         }
 

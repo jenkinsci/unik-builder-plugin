@@ -7,13 +7,16 @@ import hudson.util.FormValidation;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import io.jenkins.plugins.unik.utils.Resolver;
 import io.jenkins.plugins.unik.validator.ValidatorUtils;
-import it.mathiasmah.junik.client.Client;
 import it.mathiasmah.junik.client.exceptions.UnikException;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
-import org.springframework.validation.ValidationUtils;
 
+/**
+ * An implementation of {@link UnikCommand} equivalent to the <i>unik attach-volume</i> CLI command
+ *
+ * @see UnikCommand
+ */
 public class AttachVolumeCommand extends UnikCommand {
 
     private String volumeName;
@@ -76,7 +79,7 @@ public class AttachVolumeCommand extends UnikCommand {
         }
 
         public FormValidation doCheckInstanceId(@QueryParameter String instanceId) {
-            return ValidatorUtils.validateStringNotEmpty(instanceId );
+            return ValidatorUtils.validateStringNotEmpty(instanceId);
         }
 
         public FormValidation doCheckMountPoint(@QueryParameter String mountPoint) {

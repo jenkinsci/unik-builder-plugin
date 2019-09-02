@@ -4,24 +4,26 @@ import hudson.Extension;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.util.FormValidation;
-import io.jenkins.plugins.unik.action.UnikInstanceConsoleAction;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import io.jenkins.plugins.unik.utils.Resolver;
 import io.jenkins.plugins.unik.validator.ValidatorUtils;
-import it.mathiasmah.junik.client.Client;
 import it.mathiasmah.junik.client.exceptions.UnikException;
 import it.mathiasmah.junik.client.models.Instance;
 import it.mathiasmah.junik.client.models.RunInstance;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.verb.POST;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * An implementation of {@link UnikCommand} equivalent to the <i>unik run</i> CLI command
+ *
+ * @see UnikCommand
+ */
 public class RunInstanceCommand extends UnikCommand {
 
     private String instanceName;
@@ -114,7 +116,7 @@ public class RunInstanceCommand extends UnikCommand {
         console.logInfo("Instance " + instanceNameRes + "is started");
         console.logInfo(instance.toString());
 
-        if(instance.getId() != null) {
+        if (instance.getId() != null) {
             attachInstanceOutput(build, instance.getId(), instance.getName());
             console.logInfo("Attach log action");
         } else {
@@ -123,7 +125,7 @@ public class RunInstanceCommand extends UnikCommand {
     }
 
     private Map<String, String> resolvePairs(String rawString, String delimiter) {
-        if(StringUtils.isBlank(rawString)) {
+        if (StringUtils.isBlank(rawString)) {
             return Collections.emptyMap();
         }
         return Arrays.stream(rawString.split("/n")).collect(Collectors.toMap((m -> m.substring(0, m.indexOf(delimiter) - 1)), (m -> m.substring(m.indexOf(delimiter)))));

@@ -11,17 +11,18 @@ import java.util.logging.Logger;
 
 /**
  * Convenient class for resolving/expanding various variabales.
- *
  */
 public class Resolver {
+
+    private static final Logger LOG = Logger.getLogger(Resolver.class.getName());
 
     public static String buildVar(final AbstractBuild<?, ?> build, final String toResolve) {
         if (toResolve == null)
             return null;
-        
+
         if (build == null)
             return toResolve;
-        
+
         VariableResolver<String> vr = build.getBuildVariableResolver();
         String resolved = Util.replaceMacro(toResolve, vr);
         try {
@@ -32,10 +33,8 @@ public class Resolver {
         }
         return resolved;
     }
-    
+
     public static String envVar(final String toResolve) {
-         return Util.replaceMacro(toResolve, System.getenv());
+        return Util.replaceMacro(toResolve, System.getenv());
     }
-    
-    private static final Logger LOG = Logger.getLogger(Resolver.class.getName());
 }

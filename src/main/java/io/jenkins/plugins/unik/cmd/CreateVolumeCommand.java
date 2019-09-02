@@ -5,7 +5,6 @@ import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
-import io.jenkins.plugins.unik.UnikBuilder;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import io.jenkins.plugins.unik.utils.CompressUtils;
 import io.jenkins.plugins.unik.utils.Resolver;
@@ -21,6 +20,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * An implementation of {@link UnikCommand} equivalent to the <i>unik create-volume</i> CLI command
+ *
+ * @see UnikCommand
+ */
 public class CreateVolumeCommand extends UnikCommand {
 
     private static java.util.logging.Logger LOGGER = Logger.getLogger(CreateVolumeCommand.class.getName());
@@ -106,7 +110,7 @@ public class CreateVolumeCommand extends UnikCommand {
                 console.logInfo("Create tar archive of " + dataRes);
                 dataRes = CompressUtils.CreateTarGz(dataRes, volumeName);
             } catch (IOException e) {
-                LOGGER.log(Level.WARNING,"Could not create tar archive",e);
+                LOGGER.log(Level.WARNING, "Could not create tar archive", e);
                 console.logWarn("Could not create tar archive, cause: " + e.getMessage());
                 dataRes = "";
             }
@@ -156,14 +160,14 @@ public class CreateVolumeCommand extends UnikCommand {
         public FormValidation doCheckSize(@QueryParameter String size, @QueryParameter String data) {
             FormValidation sizeValidation = ValidatorUtils.validateStringNotEmpty(size);
             FormValidation dataValidation = ValidatorUtils.validateStringNotEmpty(data);
-            if(!FormValidation.Kind.OK.equals(sizeValidation.kind) && !FormValidation.Kind.OK.equals(dataValidation.kind)) {
+            if (!FormValidation.Kind.OK.equals(sizeValidation.kind) && !FormValidation.Kind.OK.equals(dataValidation.kind)) {
                 return FormValidation.error(Messages.CreateVolumeCommand_DescriptorImpl_validateSizeAndData_error());
             }
             return FormValidation.ok();
         }
 
         public FormValidation doCheckData(@QueryParameter String data, @QueryParameter String size) {
-            return doCheckSize(size,data);
+            return doCheckSize(size, data);
         }
     }
 }

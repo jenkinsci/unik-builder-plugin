@@ -14,6 +14,11 @@ import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 
+/**
+ * An implementation of {@link UnikCommand} equivalent to the <i>unik pull</i> CLI command
+ *
+ * @see UnikCommand
+ */
 public class PullImageCommand extends UnikCommand {
 
     private String imageName;
@@ -59,7 +64,7 @@ public class PullImageCommand extends UnikCommand {
             throw new IllegalArgumentException("Hub config not valid");
         }
 
-        getClient().hubs().pull(hub, imageNameRes,providerRes,force);
+        getClient().hubs().pull(hub, imageNameRes, providerRes, force);
         console.logInfo("Pulled " + imageNameRes + " from " + hub.getUrl());
     }
 
