@@ -8,7 +8,7 @@
         <relativePath />
     </parent>
     <groupId>io.jenkins.plugins</groupId>
-    <artifactId>unik-plugin</artifactId>
+    <artifactId>unik-builder</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <properties>
@@ -16,7 +16,7 @@
         <jenkins.version>2.164.1</jenkins.version>
         <java.level>8</java.level>
     </properties>
-    <name>Unik Plugin</name>
+    <name>Unik Builder</name>
     <!-- The default licence for Jenkins OSS Plugins is MIT. Substitute for the applicable one if needed. -->
     <licenses>
         <license>
@@ -26,9 +26,9 @@
     </licenses>
     <dependencies>
         <dependency>
-            <groupId>mathiasmah</groupId>
+            <groupId>io.github.mathiasmah.unik</groupId>
             <artifactId>junik</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <version>0.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
