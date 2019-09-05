@@ -10,6 +10,7 @@ import io.jenkins.plugins.unik.utils.Resolver;
 import io.jenkins.plugins.unik.validator.ValidatorUtils;
 import it.mathiasmah.junik.client.exceptions.UnikException;
 import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
@@ -53,6 +54,7 @@ public class RemoveInstanceCommand extends UnikCommand {
     }
 
 
+    @Symbol("delete-instance")
     @Extension
     public static class RemoveInstanceCommandDescriptor extends UnikCommandDescriptor {
 

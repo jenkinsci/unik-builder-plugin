@@ -13,6 +13,7 @@ import it.mathiasmah.junik.client.exceptions.UnikException;
 import it.mathiasmah.junik.client.models.CreateImage;
 import it.mathiasmah.junik.client.models.Image;
 import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
@@ -151,6 +152,7 @@ public class CreateImageCommand extends UnikCommand {
         new File(tarArchive).delete();
     }
 
+    @Symbol("build")
     @Extension
     public static class CreateImageCommandDescriptor extends UnikCommandDescriptor {
 

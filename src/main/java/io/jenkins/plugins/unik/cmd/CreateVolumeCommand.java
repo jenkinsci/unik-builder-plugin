@@ -14,6 +14,7 @@ import it.mathiasmah.junik.client.exceptions.UnikException;
 import it.mathiasmah.junik.client.models.CreateVolume;
 import it.mathiasmah.junik.client.models.Volume;
 import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
@@ -140,6 +141,7 @@ public class CreateVolumeCommand extends UnikCommand {
     }
 
 
+    @Symbol("create-volume")
     @Extension
     public static class CreateVolumeCommandDescriptor extends UnikCommandDescriptor {
 

@@ -10,6 +10,7 @@ import io.jenkins.plugins.unik.utils.Resolver;
 import io.jenkins.plugins.unik.validator.ValidatorUtils;
 import it.mathiasmah.junik.client.exceptions.UnikException;
 import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
@@ -47,6 +48,7 @@ public class StartInstanceCommand extends UnikCommand {
     }
 
 
+    @Symbol("start")
     @Extension
     public static class StartInstanceCommandDescriptor extends UnikCommandDescriptor {
 

@@ -11,6 +11,7 @@ import it.mathiasmah.junik.client.Client;
 import it.mathiasmah.junik.client.exceptions.UnikException;
 import jenkins.tasks.SimpleBuildStep;
 import net.sf.json.JSONObject;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
@@ -70,6 +71,7 @@ public class UnikBuilder extends Builder implements SimpleBuildStep {
         }
     }
 
+    @Symbol("unik")
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> implements Serializable {
 

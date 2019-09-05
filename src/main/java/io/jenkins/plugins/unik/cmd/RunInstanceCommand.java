@@ -12,6 +12,7 @@ import it.mathiasmah.junik.client.exceptions.UnikException;
 import it.mathiasmah.junik.client.models.Instance;
 import it.mathiasmah.junik.client.models.RunInstance;
 import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
@@ -135,6 +136,7 @@ public class RunInstanceCommand extends UnikCommand {
     }
 
 
+    @Symbol("run")
     @Extension
     public static class RunInstanceCommandDescriptor extends UnikCommandDescriptor {
 

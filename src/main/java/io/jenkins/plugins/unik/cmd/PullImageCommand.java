@@ -12,6 +12,7 @@ import io.jenkins.plugins.unik.validator.ValidatorUtils;
 import it.mathiasmah.junik.client.exceptions.UnikException;
 import it.mathiasmah.junik.client.models.Hub;
 import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
@@ -72,6 +73,7 @@ public class PullImageCommand extends UnikCommand {
     }
 
 
+    @Symbol("pull")
     @Extension
     public static class PullImageDescriptor extends UnikCommandDescriptor {
 
