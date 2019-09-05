@@ -4,7 +4,6 @@ import com.google.common.base.Strings;
 import hudson.DescriptorExtensionList;
 import hudson.ExtensionPoint;
 import hudson.Launcher;
-import hudson.model.AbstractBuild;
 import hudson.model.Describable;
 import hudson.model.Descriptor;
 import hudson.model.Run;
@@ -89,7 +88,7 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
      * Execute the Unik command
      *
      * @param launcher the {@link Launcher} of this build
-     * @param run    the current build
+     * @param run      the current build
      * @param console  the logger to log to the Jenkins console of this build
      * @throws UnikException if something went wrong with the execution
      */

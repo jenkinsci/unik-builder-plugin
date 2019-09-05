@@ -2,6 +2,7 @@ package io.jenkins.plugins.unik.cmd;
 
 import hudson.Extension;
 import hudson.Launcher;
+import hudson.model.Item;
 import hudson.model.Run;
 import hudson.util.FormValidation;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
@@ -12,6 +13,7 @@ import it.mathiasmah.junik.client.exceptions.UnikException;
 import it.mathiasmah.junik.client.models.CreateImage;
 import it.mathiasmah.junik.client.models.Image;
 import org.apache.commons.lang.StringUtils;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.POST;
@@ -158,27 +160,52 @@ public class CreateImageCommand extends UnikCommand {
         }
 
         @POST
-        public FormValidation doCheckUnikFolder(@QueryParameter String unikFolder) {
+        public FormValidation doCheckUnikFolder(@QueryParameter String unikFolder, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
             return ValidatorUtils.validateStringNotEmpty(unikFolder);
         }
 
         @POST
-        public FormValidation doCheckImageName(@QueryParameter String imageName) {
+        public FormValidation doCheckImageName(@QueryParameter String imageName, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
             return ValidatorUtils.validateStringNotEmpty(imageName);
         }
 
         @POST
-        public FormValidation doCheckProvider(@QueryParameter String provider) {
+        public FormValidation doCheckProvider(@QueryParameter String provider, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
             return ValidatorUtils.validateStringNotEmpty(provider);
         }
 
         @POST
-        public FormValidation doCheckBase(@QueryParameter String base) {
+        public FormValidation doCheckBase(@QueryParameter String base, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
             return ValidatorUtils.validateStringNotEmpty(base);
         }
 
         @POST
-        public FormValidation doCheckLanguage(@QueryParameter String language) {
+        public FormValidation doCheckLanguage(@QueryParameter String language, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
             return ValidatorUtils.validateStringNotEmpty(language);
         }
     }

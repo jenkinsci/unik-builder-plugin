@@ -2,6 +2,7 @@ package io.jenkins.plugins.unik.cmd;
 
 import hudson.Extension;
 import hudson.Launcher;
+import hudson.model.Item;
 import hudson.model.Run;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
@@ -13,6 +14,7 @@ import it.mathiasmah.junik.client.exceptions.UnikException;
 import it.mathiasmah.junik.client.models.CreateVolume;
 import it.mathiasmah.junik.client.models.Volume;
 import org.apache.commons.lang.StringUtils;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.POST;
@@ -151,17 +153,32 @@ public class CreateVolumeCommand extends UnikCommand {
         }
 
         @POST
-        public FormValidation doCheckVolumeName(@QueryParameter String volumeName) {
+        public FormValidation doCheckVolumeName(@QueryParameter String volumeName, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
             return ValidatorUtils.validateStringNotEmpty(volumeName);
         }
 
         @POST
-        public FormValidation doCheckProvider(@QueryParameter String provider) {
+        public FormValidation doCheckProvider(@QueryParameter String provider, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
             return ValidatorUtils.validateStringNotEmpty(provider);
         }
 
         @POST
-        public FormValidation doCheckSize(@QueryParameter String size, @QueryParameter String data) {
+        public FormValidation doCheckSize(@QueryParameter String size, @QueryParameter String data, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
             FormValidation sizeValidation = ValidatorUtils.validateStringNotEmpty(size);
             FormValidation dataValidation = ValidatorUtils.validateStringNotEmpty(data);
             if (!FormValidation.Kind.OK.equals(sizeValidation.kind) && !FormValidation.Kind.OK.equals(dataValidation.kind)) {
@@ -171,8 +188,13 @@ public class CreateVolumeCommand extends UnikCommand {
         }
 
         @POST
-        public FormValidation doCheckData(@QueryParameter String data, @QueryParameter String size) {
-            return doCheckSize(size, data);
+        public FormValidation doCheckData(@QueryParameter String data, @QueryParameter String size, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
+            return doCheckSize(size, data, item);
         }
     }
 }

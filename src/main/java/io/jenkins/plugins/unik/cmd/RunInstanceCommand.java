@@ -2,6 +2,7 @@ package io.jenkins.plugins.unik.cmd;
 
 import hudson.Extension;
 import hudson.Launcher;
+import hudson.model.Item;
 import hudson.model.Run;
 import hudson.util.FormValidation;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
@@ -11,6 +12,7 @@ import it.mathiasmah.junik.client.exceptions.UnikException;
 import it.mathiasmah.junik.client.models.Instance;
 import it.mathiasmah.junik.client.models.RunInstance;
 import org.apache.commons.lang.StringUtils;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.POST;
@@ -142,12 +144,22 @@ public class RunInstanceCommand extends UnikCommand {
         }
 
         @POST
-        public FormValidation doCheckInstanceName(@QueryParameter String instanceName) {
+        public FormValidation doCheckInstanceName(@QueryParameter String instanceName, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
             return ValidatorUtils.validateStringNotEmpty(instanceName);
         }
 
         @POST
-        public FormValidation doCheckImageName(@QueryParameter String imageName) {
+        public FormValidation doCheckImageName(@QueryParameter String imageName, @AncestorInPath Item item) {
+            if (item == null) {
+                return FormValidation.ok();
+            }
+            item.checkPermission(Item.CONFIGURE);
+
             return ValidatorUtils.validateStringNotEmpty(imageName);
         }
     }
