@@ -2,7 +2,7 @@ package io.jenkins.plugins.unik.cmd;
 
 import hudson.Extension;
 import hudson.Launcher;
-import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
@@ -77,20 +77,20 @@ public class CreateVolumeCommand extends UnikCommand {
     }
 
     @Override
-    public void execute(Launcher launcher, AbstractBuild<?, ?> build, ConsoleLogger console) throws UnikException {
+    public void execute(Launcher launcher, Run<?, ?> run, ConsoleLogger console) throws UnikException {
         console.logInfo("Execute Command: " + getDescriptor().getDisplayName());
 
-        final String volumeNameRes = Resolver.buildVar(build, volumeName);
+        final String volumeNameRes = Resolver.buildVar(run, volumeName);
         if (StringUtils.isBlank(volumeNameRes)) {
             throw new IllegalArgumentException("Volume name can not be empty");
         }
 
-        final String providerRes = Resolver.buildVar(build, provider);
+        final String providerRes = Resolver.buildVar(run, provider);
         if (StringUtils.isBlank(providerRes)) {
             throw new IllegalArgumentException("Provider can not be empty");
         }
 
-        final String sizeRawRes = Resolver.buildVar(build, size);
+        final String sizeRawRes = Resolver.buildVar(run, size);
         int sizeRes;
         try {
             sizeRes = Integer.valueOf(sizeRawRes);
@@ -103,7 +103,7 @@ public class CreateVolumeCommand extends UnikCommand {
             console.logWarn("Not a valid volume size " + sizeRes + ", will be ignored");
         }
 
-        String dataRes = Resolver.buildVar(build, data);
+        String dataRes = Resolver.buildVar(run, data);
 
         if (!raw && !StringUtils.isBlank(data)) {
             try {
@@ -120,7 +120,7 @@ public class CreateVolumeCommand extends UnikCommand {
             throw new IllegalArgumentException("Either a data or a volume size greater 0 must be specified");
         }
 
-        final String typeRes = Resolver.buildVar(build, type);
+        final String typeRes = Resolver.buildVar(run, type);
 
         final CreateVolume createVolume = new CreateVolume();
         createVolume.setName(volumeNameRes);

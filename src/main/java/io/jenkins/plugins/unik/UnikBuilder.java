@@ -1,12 +1,7 @@
 package io.jenkins.plugins.unik;
 
-import hudson.AbortException;
-import hudson.DescriptorExtensionList;
-import hudson.Extension;
-import hudson.Launcher;
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractProject;
-import hudson.model.BuildListener;
+import hudson.*;
+import hudson.model.*;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Builder;
 import hudson.util.FormValidation;
@@ -14,11 +9,13 @@ import io.jenkins.plugins.unik.cmd.UnikCommand;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import it.mathiasmah.junik.client.Client;
 import it.mathiasmah.junik.client.exceptions.UnikException;
+import jenkins.tasks.SimpleBuildStep;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -31,7 +28,7 @@ import static org.apache.commons.lang.StringUtils.isEmpty;
  *
  * @see UnikCommand
  */
-public class UnikBuilder extends Builder {
+public class UnikBuilder extends Builder implements SimpleBuildStep {
 
     private static Logger LOGGER = Logger.getLogger(UnikBuilder.class.getName());
 
@@ -47,7 +44,12 @@ public class UnikBuilder extends Builder {
     }
 
     @Override
-    public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws IOException {
+    public DescriptorImpl getDescriptor() {
+        return (DescriptorImpl) super.getDescriptor();
+    }
+
+    @Override
+    public void perform(@Nonnull Run<?, ?> run, @Nonnull FilePath workspace, @Nonnull Launcher launcher, @Nonnull TaskListener listener) throws  IOException {
         ConsoleLogger clog = new ConsoleLogger(listener);
 
         try {
@@ -60,18 +62,12 @@ public class UnikBuilder extends Builder {
         }
 
         try {
-            command.execute(launcher, build, clog);
+            command.execute(launcher, run, clog);
         } catch (UnikException e) {
             clog.logError("command '" + command.getDescriptor().getDisplayName() + "' failed: " + e.getMessage());
             LOGGER.log(Level.SEVERE, "Failed to execute Unik command " + command.getDescriptor().getDisplayName(), e);
             throw new AbortException(e.getMessage());
         }
-        return true;
-    }
-
-    @Override
-    public DescriptorImpl getDescriptor() {
-        return (DescriptorImpl) super.getDescriptor();
     }
 
     @Extension

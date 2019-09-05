@@ -2,7 +2,7 @@ package io.jenkins.plugins.unik.cmd;
 
 import hudson.Extension;
 import hudson.Launcher;
-import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.util.FormValidation;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import io.jenkins.plugins.unik.utils.Resolver;
@@ -43,20 +43,20 @@ public class AttachVolumeCommand extends UnikCommand {
     }
 
     @Override
-    public void execute(Launcher launcher, AbstractBuild<?, ?> build, ConsoleLogger console) throws UnikException {
+    public void execute(Launcher launcher, Run<?, ?> run, ConsoleLogger console) throws UnikException {
         console.logInfo("Execute Command: " + getDescriptor().getDisplayName());
 
-        final String volumeNameRes = Resolver.buildVar(build, volumeName);
+        final String volumeNameRes = Resolver.buildVar(run, volumeName);
         if (StringUtils.isBlank(volumeNameRes)) {
             throw new IllegalArgumentException("Volume name can not be empty");
         }
 
-        final String instanceIdRes = Resolver.buildVar(build, instanceId);
+        final String instanceIdRes = Resolver.buildVar(run, instanceId);
         if (StringUtils.isBlank(instanceIdRes)) {
             throw new IllegalArgumentException("Instance id can not be empty");
         }
 
-        final String mountPointRes = Resolver.buildVar(build, mountPoint);
+        final String mountPointRes = Resolver.buildVar(run, mountPoint);
         if (StringUtils.isBlank(mountPointRes)) {
             throw new IllegalArgumentException("Mount point can not be empty");
         }

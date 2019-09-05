@@ -1,6 +1,7 @@
 package io.jenkins.plugins.unik.log;
 
 import hudson.model.BuildListener;
+import hudson.model.TaskListener;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -12,15 +13,15 @@ import java.nio.charset.Charset;
  */
 public class ConsoleLogger {
 
-    private final BuildListener listener;
+    private final TaskListener listener;
     private final UnikConsoleAnnotator annotator;
 
-    public ConsoleLogger(BuildListener listener) {
+    public ConsoleLogger(TaskListener listener) {
         this.listener = listener;
         this.annotator = new UnikConsoleAnnotator(this.listener.getLogger());
     }
 
-    public BuildListener getListener() {
+    public TaskListener getListener() {
         return listener;
     }
 

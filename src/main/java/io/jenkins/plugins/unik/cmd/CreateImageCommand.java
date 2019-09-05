@@ -2,7 +2,7 @@ package io.jenkins.plugins.unik.cmd;
 
 import hudson.Extension;
 import hudson.Launcher;
-import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.util.FormValidation;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import io.jenkins.plugins.unik.utils.CompressUtils;
@@ -86,36 +86,36 @@ public class CreateImageCommand extends UnikCommand {
     }
 
     @Override
-    public void execute(Launcher launcher, AbstractBuild<?, ?> build, ConsoleLogger console) throws UnikException {
+    public void execute(Launcher launcher, Run<?, ?> run, ConsoleLogger console) throws UnikException {
         console.logInfo("Execute Command: " + getDescriptor().getDisplayName());
 
-        final String unikFolderRes = Resolver.buildVar(build, unikFolder);
+        final String unikFolderRes = Resolver.buildVar(run, unikFolder);
         if (StringUtils.isBlank(unikFolderRes)) {
             throw new IllegalArgumentException("Application location can not be empty");
         }
 
-        final String imageNameRes = Resolver.buildVar(build, imageName);
+        final String imageNameRes = Resolver.buildVar(run, imageName);
         if (StringUtils.isBlank(imageNameRes)) {
             throw new IllegalArgumentException("Image name can not be empty");
         }
 
-        final String providerRes = Resolver.buildVar(build, provider);
+        final String providerRes = Resolver.buildVar(run, provider);
         if (StringUtils.isBlank(providerRes)) {
             throw new IllegalArgumentException("Provider can not be empty");
         }
 
-        final String baseRes = Resolver.buildVar(build, base);
+        final String baseRes = Resolver.buildVar(run, base);
         if (StringUtils.isBlank(baseRes)) {
             throw new IllegalArgumentException("Unikernel base can not be empty");
         }
 
-        final String languageRes = Resolver.buildVar(build, language);
+        final String languageRes = Resolver.buildVar(run, language);
         if (StringUtils.isBlank(languageRes)) {
             throw new IllegalArgumentException("Language can not be empty");
         }
 
-        final String argsRawRes = Resolver.buildVar(build, args);
-        final String mountsRawRes = Resolver.buildVar(build, mounts);
+        final String argsRawRes = Resolver.buildVar(run, args);
+        final String mountsRawRes = Resolver.buildVar(run, mounts);
 
         final String tarArchive;
         try {

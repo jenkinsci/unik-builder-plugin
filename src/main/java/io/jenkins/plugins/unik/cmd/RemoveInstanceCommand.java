@@ -2,7 +2,7 @@ package io.jenkins.plugins.unik.cmd;
 
 import hudson.Extension;
 import hudson.Launcher;
-import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.util.FormValidation;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import io.jenkins.plugins.unik.utils.Resolver;
@@ -37,10 +37,10 @@ public class RemoveInstanceCommand extends UnikCommand {
     }
 
     @Override
-    public void execute(Launcher launcher, AbstractBuild<?, ?> build, ConsoleLogger console) throws UnikException {
+    public void execute(Launcher launcher, Run<?, ?> run, ConsoleLogger console) throws UnikException {
         console.logInfo("Execute Command: " + getDescriptor().getDisplayName());
 
-        final String instanceNameRes = Resolver.buildVar(build, instanceName);
+        final String instanceNameRes = Resolver.buildVar(run, instanceName);
         if (StringUtils.isBlank(instanceNameRes)) {
             throw new IllegalArgumentException("Instance name can not be empty");
         }

@@ -7,6 +7,7 @@ import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.Describable;
 import hudson.model.Descriptor;
+import hudson.model.Run;
 import io.jenkins.plugins.unik.UnikBuilder;
 import io.jenkins.plugins.unik.UnikHubEndpoint;
 import io.jenkins.plugins.unik.action.UnikInstanceConsoleAction;
@@ -88,11 +89,11 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
      * Execute the Unik command
      *
      * @param launcher the {@link Launcher} of this build
-     * @param build    the current build
+     * @param run    the current build
      * @param console  the logger to log to the Jenkins console of this build
      * @throws UnikException if something went wrong with the execution
      */
-    public abstract void execute(Launcher launcher, AbstractBuild<?, ?> build, ConsoleLogger console)
+    public abstract void execute(Launcher launcher, Run<?, ?> run, ConsoleLogger console)
             throws UnikException;
 
     @Override
