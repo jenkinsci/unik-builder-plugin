@@ -1,15 +1,15 @@
 <j:jelly xmlns:j="jelly:core"
          xmlns:f="/lib/form">
     <f:entry field="volumeName" title="${%volumenametitle}">
-        <f:textbox default=""/>
+        <f:textbox default="" checkMethod="post"/>
     </f:entry>
 
     <f:entry field="instanceId" title="${%instanceidtitle}">
-        <f:textbox default=""/>
+        <f:textbox default="" checkMethod="post"/>
     </f:entry>
 
     <f:entry field="mountPoint" title="${%mountpointtitle}">
-        <f:textbox default=""/>
+        <f:textbox default="" checkMethod="post"/>
     </f:entry>
 
 </j:jelly>

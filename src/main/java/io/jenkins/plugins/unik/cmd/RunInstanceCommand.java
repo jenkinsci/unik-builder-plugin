@@ -13,6 +13,7 @@ import it.mathiasmah.junik.client.models.RunInstance;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -140,10 +141,12 @@ public class RunInstanceCommand extends UnikCommand {
             return Messages.RunInstanceCommand_DescriptorImpl_DisplayName();
         }
 
+        @POST
         public FormValidation doCheckInstanceName(@QueryParameter String instanceName) {
             return ValidatorUtils.validateStringNotEmpty(instanceName);
         }
 
+        @POST
         public FormValidation doCheckImageName(@QueryParameter String imageName) {
             return ValidatorUtils.validateStringNotEmpty(imageName);
         }

@@ -11,6 +11,7 @@ import it.mathiasmah.junik.client.exceptions.UnikException;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 /**
  * An implementation of {@link UnikCommand} equivalent to the <i>unik attach-volume</i> CLI command
@@ -74,14 +75,17 @@ public class AttachVolumeCommand extends UnikCommand {
             return Messages.AttachVolumeCommand_DescriptorImpl_DisplayName();
         }
 
+        @POST
         public FormValidation doCheckVolumeName(@QueryParameter String volumeName) {
             return ValidatorUtils.validateStringNotEmpty(volumeName);
         }
 
+        @POST
         public FormValidation doCheckInstanceId(@QueryParameter String instanceId) {
             return ValidatorUtils.validateStringNotEmpty(instanceId);
         }
 
+        @POST
         public FormValidation doCheckMountPoint(@QueryParameter String mountPoint) {
             return ValidatorUtils.validateStringNotEmpty(mountPoint);
         }

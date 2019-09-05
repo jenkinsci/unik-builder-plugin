@@ -11,6 +11,7 @@ import it.mathiasmah.junik.client.exceptions.UnikException;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 /**
  * An implementation of {@link UnikCommand} equivalent to the <i>unik detach-volume</i> CLI command
@@ -52,6 +53,7 @@ public class DetachVolumeCommand extends UnikCommand {
             return Messages.DetachVolumeCommand_DescriptorImpl_DisplayName();
         }
 
+        @POST
         public FormValidation doCheckVolumeName(@QueryParameter String volumeName) {
             return ValidatorUtils.validateStringNotEmpty(volumeName);
         }

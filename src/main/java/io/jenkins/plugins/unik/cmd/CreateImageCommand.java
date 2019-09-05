@@ -14,6 +14,7 @@ import it.mathiasmah.junik.client.models.Image;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 import java.io.File;
 import java.io.IOException;
@@ -156,22 +157,27 @@ public class CreateImageCommand extends UnikCommand {
             return Messages.CreateImageCommand_DescriptorImpl_DisplayName();
         }
 
+        @POST
         public FormValidation doCheckUnikFolder(@QueryParameter String unikFolder) {
             return ValidatorUtils.validateStringNotEmpty(unikFolder);
         }
 
+        @POST
         public FormValidation doCheckImageName(@QueryParameter String imageName) {
             return ValidatorUtils.validateStringNotEmpty(imageName);
         }
 
+        @POST
         public FormValidation doCheckProvider(@QueryParameter String provider) {
             return ValidatorUtils.validateStringNotEmpty(provider);
         }
 
+        @POST
         public FormValidation doCheckBase(@QueryParameter String base) {
             return ValidatorUtils.validateStringNotEmpty(base);
         }
 
+        @POST
         public FormValidation doCheckLanguage(@QueryParameter String language) {
             return ValidatorUtils.validateStringNotEmpty(language);
         }

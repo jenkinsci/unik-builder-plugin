@@ -2,23 +2,23 @@
          xmlns:f="/lib/form">
 
     <f:entry field="unikFolder" title="${%unikfoldertitle}">
-        <f:textbox default="" />
+        <f:textbox default="" checkMethod="post"/>
     </f:entry>
 
     <f:entry field="imageName" title="${%imagenametitle}">
-        <f:textbox default=""/>
+        <f:textbox default="" checkMethod="post"/>
     </f:entry>
 
     <f:entry field="provider" title="${%providertitle}">
-        <f:textbox default=""/>
+        <f:textbox default="" checkMethod="post"/>
     </f:entry>
 
     <f:entry field="base" title="${%basetitle}">
-        <f:textbox default=""/>
+        <f:textbox default="" checkMethod="post"/>
     </f:entry>
 
     <f:entry field="language" title="${%languagetitle}">
-        <f:textbox default=""/>
+        <f:textbox default="" checkMethod="post"/>
     </f:entry>
 
     <f:advanced>

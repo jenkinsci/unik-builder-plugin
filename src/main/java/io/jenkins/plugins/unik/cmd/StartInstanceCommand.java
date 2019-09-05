@@ -11,6 +11,7 @@ import it.mathiasmah.junik.client.exceptions.UnikException;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 /**
  * An implementation of {@link UnikCommand} equivalent to the <i>unik start</i> CLI command
@@ -52,6 +53,7 @@ public class StartInstanceCommand extends UnikCommand {
             return Messages.StartInstanceCommand_DescriptorImpl_DisplayName();
         }
 
+        @POST
         public FormValidation doCheckInstanceName(@QueryParameter String instanceName) {
             return ValidatorUtils.validateStringNotEmpty(instanceName);
         }

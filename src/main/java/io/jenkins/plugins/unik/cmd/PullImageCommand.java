@@ -13,6 +13,7 @@ import it.mathiasmah.junik.client.models.Hub;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 /**
  * An implementation of {@link UnikCommand} equivalent to the <i>unik pull</i> CLI command
@@ -77,10 +78,12 @@ public class PullImageCommand extends UnikCommand {
             return Messages.PullImageCommand_DescriptorImpl_DisplayName();
         }
 
+        @POST
         public FormValidation doCheckImageName(@QueryParameter String imageName) {
             return ValidatorUtils.validateStringNotEmpty(imageName);
         }
 
+        @POST
         public FormValidation doCheckProvider(@QueryParameter String provider) {
             return ValidatorUtils.validateStringNotEmpty(provider);
         }

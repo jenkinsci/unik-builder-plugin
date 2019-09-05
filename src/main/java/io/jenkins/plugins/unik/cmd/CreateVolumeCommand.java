@@ -15,6 +15,7 @@ import it.mathiasmah.junik.client.models.Volume;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -149,14 +150,17 @@ public class CreateVolumeCommand extends UnikCommand {
             return new ListBoxModel().add("ext2").add("FAT");
         }
 
+        @POST
         public FormValidation doCheckVolumeName(@QueryParameter String volumeName) {
             return ValidatorUtils.validateStringNotEmpty(volumeName);
         }
 
+        @POST
         public FormValidation doCheckProvider(@QueryParameter String provider) {
             return ValidatorUtils.validateStringNotEmpty(provider);
         }
 
+        @POST
         public FormValidation doCheckSize(@QueryParameter String size, @QueryParameter String data) {
             FormValidation sizeValidation = ValidatorUtils.validateStringNotEmpty(size);
             FormValidation dataValidation = ValidatorUtils.validateStringNotEmpty(data);
@@ -166,6 +170,7 @@ public class CreateVolumeCommand extends UnikCommand {
             return FormValidation.ok();
         }
 
+        @POST
         public FormValidation doCheckData(@QueryParameter String data, @QueryParameter String size) {
             return doCheckSize(size, data);
         }

@@ -11,6 +11,7 @@ import it.mathiasmah.junik.client.exceptions.UnikException;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 /**
  * An implementation of {@link UnikCommand} equivalent to the <i>unik delete-image</i> CLI command
@@ -59,6 +60,7 @@ public class RemoveImageCommand extends UnikCommand {
             return Messages.RemoveImageCommand_DescriptorImpl_DisplayName();
         }
 
+        @POST
         public FormValidation doCheckImageName(@QueryParameter String imageName) {
             return ValidatorUtils.validateStringNotEmpty(imageName);
         }

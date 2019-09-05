@@ -23,13 +23,13 @@ public class UnikInstanceConsoleAction extends TaskAction implements Serializabl
 
     private static Logger LOGGER = Logger.getLogger(UnikInstanceConsoleAction.class.getName());
 
-    private final AbstractBuild<?, ?> build;
+    private final Run<?, ?> build;
 
     private final String instanceId;
     private final String instanceName;
 
 
-    public UnikInstanceConsoleAction(AbstractBuild<?, ?> build, String instanceId, String instanceName) {
+    public UnikInstanceConsoleAction(Run<?, ?> build, String instanceId, String instanceName) {
         super();
         this.build = build;
         this.instanceId = instanceId;
@@ -50,7 +50,7 @@ public class UnikInstanceConsoleAction extends TaskAction implements Serializabl
         return build.getFullDisplayName() + ' ' + getDisplayName();
     }
 
-    public AbstractBuild<?, ?> getOwner() {
+    public Run<?, ?> getOwner() {
         return this.build;
     }
 
@@ -117,7 +117,7 @@ public class UnikInstanceConsoleAction extends TaskAction implements Serializabl
 
             final Client client = ((UnikBuilder.DescriptorImpl) Jenkins.get().getDescriptor(UnikBuilder.class)).getUnikClient();
 
-            client.instances().logsAsStream(instanceId, false, listener.getLogger());
+            client.instances().logToStream(instanceId, false, listener.getLogger());
         }
     }
 }

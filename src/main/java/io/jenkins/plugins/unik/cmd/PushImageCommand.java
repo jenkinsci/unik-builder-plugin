@@ -13,6 +13,7 @@ import it.mathiasmah.junik.client.models.Hub;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 /**
  * An implementation of {@link UnikCommand} equivalent to the <i>unik push</i> CLI command
@@ -60,6 +61,7 @@ public class PushImageCommand extends UnikCommand {
             return Messages.PushImageCommand_DescriptorImpl_DisplayName();
         }
 
+        @POST
         public FormValidation doCheckImageName(@QueryParameter String imageName) {
             return ValidatorUtils.validateStringNotEmpty(imageName);
         }

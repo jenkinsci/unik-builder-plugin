@@ -43,7 +43,7 @@ public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
         return url;
     }
 
-    public String getEffectiveUrl(AbstractBuild<?, ?> build) {
+    public String getEffectiveUrl(Run<?, ?> build) {
         if (!StringUtils.isBlank(url)) {
             return Resolver.buildVar(build, url);
         }
@@ -55,8 +55,8 @@ public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
         return credentialsId;
     }
 
-    public Hub getHub(AbstractBuild<?, ?> build) {
-        AbstractProject<?, ?> job = build.getParent();
+    public Hub getHub(Run<?, ?> build) {
+        Job<?, ?> job = build.getParent();
 
         Hub hub = AuthenticationTokens.convert(
                 Hub.class,
@@ -66,7 +66,7 @@ public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
                                 CredentialsProvider.lookupCredentials(
                                         StandardUsernamePasswordCredentials.class,
                                         job,
-                                        Tasks.getAuthenticationOf(job),
+                                        job instanceof Queue.Task ? Tasks.getAuthenticationOf((Queue.Task)job) : ACL.SYSTEM,
                                         Collections.emptyList()
                                 ),
                                 CredentialsMatchers.withId(credentialsId)

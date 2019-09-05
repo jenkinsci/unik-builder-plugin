@@ -58,7 +58,7 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
         } else throw new UnikException("Could not create Unik client");
     }
 
-    protected static void attachInstanceOutput(AbstractBuild<?, ?> build, String containerId, String containerName) throws UnikException {
+    protected static void attachInstanceOutput(Run<?, ?> build, String containerId, String containerName) throws UnikException {
         try {
             UnikInstanceConsoleAction outAction = new UnikInstanceConsoleAction(build, containerId, containerName).start();
             build.addAction(outAction);
@@ -77,7 +77,7 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
      * @param build the current build
      * @return a {@link Hub} containing the information needed to connect to a Unik Hub
      */
-    public Hub getUnikHubConfig(AbstractBuild<?, ?> build) {
+    public Hub getUnikHubConfig(Run<?, ?> build) {
         if (unikHubEndpoint == null || Strings.isNullOrEmpty(unikHubEndpoint.getCredentialsId())) {
             return null;
         }
