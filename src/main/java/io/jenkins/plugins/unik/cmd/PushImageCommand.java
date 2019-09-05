@@ -28,14 +28,14 @@ public class PushImageCommand extends UnikCommand {
     private String imageName;
 
     @DataBoundConstructor
-    public PushImageCommand(String imageName, UnikHubEndpoint unikHubEndpoint) {
-        super(unikHubEndpoint);
+    public PushImageCommand(String imageName) {
         this.imageName = imageName;
     }
 
     public String getImageName() {
         return imageName;
     }
+
 
     @Override
     public void execute(Launcher launcher, Run<?, ?> run, ConsoleLogger console) throws UnikException {

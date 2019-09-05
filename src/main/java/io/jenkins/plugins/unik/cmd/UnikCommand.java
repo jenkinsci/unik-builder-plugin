@@ -15,6 +15,7 @@ import it.mathiasmah.junik.client.Client;
 import it.mathiasmah.junik.client.exceptions.UnikException;
 import it.mathiasmah.junik.client.models.Hub;
 import jenkins.model.Jenkins;
+import org.kohsuke.stapler.DataBoundSetter;
 
 import java.io.IOException;
 
@@ -27,12 +28,13 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
 
     private UnikHubEndpoint unikHubEndpoint;
 
-    public UnikCommand() {
-        this(null);
+    @DataBoundSetter
+    public void setUnikHubEndpoint(UnikHubEndpoint unikHubEndpoint) {
+        this.unikHubEndpoint = unikHubEndpoint;
     }
 
-    public UnikCommand(UnikHubEndpoint unikHubEndpoint) {
-        this.unikHubEndpoint = unikHubEndpoint;
+    public UnikHubEndpoint getUnikHubEndpoint() {
+        return unikHubEndpoint;
     }
 
     /**
@@ -66,10 +68,6 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
         }
     }
 
-    public UnikHubEndpoint getUnikHubEndpoint() {
-        return unikHubEndpoint;
-    }
-
     /**
      * Retrieves the information about the configured Unik Hub
      *
@@ -77,8 +75,8 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
      * @return a {@link Hub} containing the information needed to connect to a Unik Hub
      */
     public Hub getUnikHubConfig(Run<?, ?> build) {
-        if (unikHubEndpoint == null || Strings.isNullOrEmpty(unikHubEndpoint.getCredentialsId())) {
-            return null;
+        if (unikHubEndpoint == null) {
+            new UnikHubEndpoint().getHub(build);
         }
 
         return unikHubEndpoint.getHub(build);

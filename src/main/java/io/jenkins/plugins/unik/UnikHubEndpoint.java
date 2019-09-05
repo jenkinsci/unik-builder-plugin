@@ -18,10 +18,7 @@ import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
-import org.kohsuke.stapler.AncestorInPath;
-import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.*;
 
 import java.util.Collections;
 import java.util.logging.Level;
@@ -31,12 +28,22 @@ public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
 
     private static Logger LOGGER = Logger.getLogger(UnikHubEndpoint.class.getName());
 
-    private final String url;
-    private final String credentialsId;
+    private String url;
+    private String credentialsId;
 
     @DataBoundConstructor
-    public UnikHubEndpoint(String url, String credentialsId) {
+    public UnikHubEndpoint() {
+        this.url = StringUtils.EMPTY;
+        this.credentialsId = StringUtils.EMPTY;
+    }
+
+    @DataBoundSetter
+    public void setUrl(String url) {
         this.url = Util.fixEmpty(url);
+    }
+
+    @DataBoundSetter
+    public void setCredentialsId(String credentialsId) {
         this.credentialsId = Util.fixEmpty(credentialsId);
     }
 
@@ -50,7 +57,6 @@ public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
         }
         return getDescriptor().getDefaultHub();
     }
-
 
     public String getCredentialsId() {
         return credentialsId;

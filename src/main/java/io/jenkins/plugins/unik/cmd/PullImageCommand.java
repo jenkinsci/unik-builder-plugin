@@ -31,8 +31,7 @@ public class PullImageCommand extends UnikCommand {
     private boolean force;
 
     @DataBoundConstructor
-    public PullImageCommand(String imageName, String provider, UnikHubEndpoint unikHubEndpoint) {
-        super(unikHubEndpoint);
+    public PullImageCommand(String imageName, String provider) {
         this.imageName = imageName;
         this.provider = provider;
         this.force = false;
