@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.POST;
 
@@ -27,9 +28,9 @@ public class RemoveInstanceCommand extends UnikCommand {
     private boolean force;
 
     @DataBoundConstructor
-    public RemoveInstanceCommand(String instanceName, boolean force) {
+    public RemoveInstanceCommand(String instanceName) {
         this.instanceName = instanceName;
-        this.force = force;
+        this.force = true;
     }
 
     public String getInstanceName() {
@@ -38,6 +39,11 @@ public class RemoveInstanceCommand extends UnikCommand {
 
     public boolean isForce() {
         return force;
+    }
+
+    @DataBoundSetter
+    public void setForce(boolean force) {
+        this.force = force;
     }
 
     @Override

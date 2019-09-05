@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.POST;
 
@@ -27,9 +28,9 @@ public class RemoveImageCommand extends UnikCommand {
     private boolean force;
 
     @DataBoundConstructor
-    public RemoveImageCommand(String imageName, boolean force) {
+    public RemoveImageCommand(String imageName) {
         this.imageName = imageName;
-        this.force = force;
+        this.force = false;
     }
 
     public String getImageName() {
@@ -38,6 +39,11 @@ public class RemoveImageCommand extends UnikCommand {
 
     public boolean isForce() {
         return force;
+    }
+
+    @DataBoundSetter
+    public void setForce(boolean force) {
+        this.force = force;
     }
 
     @Override

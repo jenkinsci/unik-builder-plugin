@@ -17,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.POST;
 
@@ -42,14 +43,14 @@ public class CreateVolumeCommand extends UnikCommand {
     private String data;
 
     @DataBoundConstructor
-    public CreateVolumeCommand(String volumeName, String type, boolean raw, boolean noCleanup, String provider, String size, String data) {
+    public CreateVolumeCommand(String volumeName, String provider) {
         this.volumeName = volumeName;
-        this.type = type;
-        this.raw = raw;
-        this.noCleanup = noCleanup;
         this.provider = provider;
-        this.size = size;
-        this.data = data;
+        this.type = StringUtils.EMPTY;
+        this.raw = false;
+        this.noCleanup = false;
+        this.size = "0";
+        this.data = StringUtils.EMPTY;
     }
 
     public String getVolumeName() {
@@ -78,6 +79,31 @@ public class CreateVolumeCommand extends UnikCommand {
 
     public String getData() {
         return data;
+    }
+
+    @DataBoundSetter
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @DataBoundSetter
+    public void setRaw(boolean raw) {
+        this.raw = raw;
+    }
+
+    @DataBoundSetter
+    public void setNoCleanup(boolean noCleanup) {
+        this.noCleanup = noCleanup;
+    }
+
+    @DataBoundSetter
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    @DataBoundSetter
+    public void setData(String data) {
+        this.data = data;
     }
 
     @Override

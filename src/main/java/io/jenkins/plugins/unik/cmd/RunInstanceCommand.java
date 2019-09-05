@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.POST;
 
@@ -39,14 +40,14 @@ public class RunInstanceCommand extends UnikCommand {
     private String mounts;
 
     @DataBoundConstructor
-    public RunInstanceCommand(String instanceName, String imageName, String memoryMb, boolean noCleanup, boolean debug, String envs, String mounts) {
+    public RunInstanceCommand(String instanceName, String imageName) {
         this.instanceName = instanceName;
         this.imageName = imageName;
-        this.memoryMb = memoryMb;
-        this.noCleanup = noCleanup;
-        this.debug = debug;
-        this.envs = envs;
-        this.mounts = mounts;
+        this.memoryMb = "0";
+        this.noCleanup = false;
+        this.debug = false;
+        this.envs = StringUtils.EMPTY;
+        this.mounts = StringUtils.EMPTY;
     }
 
     public String getInstanceName() {
@@ -75,6 +76,31 @@ public class RunInstanceCommand extends UnikCommand {
 
     public String getMounts() {
         return mounts;
+    }
+
+    @DataBoundSetter
+    public void setMemoryMb(String memoryMb) {
+        this.memoryMb = memoryMb;
+    }
+
+    @DataBoundSetter
+    public void setNoCleanup(boolean noCleanup) {
+        this.noCleanup = noCleanup;
+    }
+
+    @DataBoundSetter
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    @DataBoundSetter
+    public void setEnvs(String envs) {
+        this.envs = envs;
+    }
+
+    @DataBoundSetter
+    public void setMounts(String mounts) {
+        this.mounts = mounts;
     }
 
     @Override

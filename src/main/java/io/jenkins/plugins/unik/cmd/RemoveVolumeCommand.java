@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.POST;
 
@@ -27,9 +28,9 @@ public class RemoveVolumeCommand extends UnikCommand {
     private boolean force;
 
     @DataBoundConstructor
-    public RemoveVolumeCommand(String volumeName, boolean force) {
+    public RemoveVolumeCommand(String volumeName) {
         this.volumeName = volumeName;
-        this.force = force;
+        this.force = false;
     }
 
     public String getVolumeName() {
@@ -38,6 +39,11 @@ public class RemoveVolumeCommand extends UnikCommand {
 
     public boolean isForce() {
         return force;
+    }
+
+    @DataBoundSetter
+    public void setForce(boolean force) {
+        this.force = force;
     }
 
     @Override

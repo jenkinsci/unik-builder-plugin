@@ -2,6 +2,7 @@ package io.jenkins.plugins.unik.cmd;
 
 import hudson.Extension;
 import hudson.Launcher;
+import hudson.Util;
 import hudson.model.Item;
 import hudson.model.Run;
 import hudson.util.FormValidation;
@@ -16,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.POST;
 
@@ -41,16 +43,16 @@ public class CreateImageCommand extends UnikCommand {
     private String mounts;
 
     @DataBoundConstructor
-    public CreateImageCommand(String unikFolder, String imageName, String provider, String base, String language, boolean noCleanup, boolean force, String args, String mounts) {
+    public CreateImageCommand(String unikFolder, String imageName, String provider, String base, String language) {
         this.unikFolder = unikFolder;
         this.imageName = imageName;
         this.provider = provider;
         this.base = base;
         this.language = language;
-        this.noCleanup = noCleanup;
-        this.force = force;
-        this.args = args;
-        this.mounts = mounts;
+        this.noCleanup = false;
+        this.force = false;
+        this.args = StringUtils.EMPTY;
+        this.mounts = StringUtils.EMPTY;
     }
 
     public String getUnikFolder() {
@@ -87,6 +89,26 @@ public class CreateImageCommand extends UnikCommand {
 
     public String getMounts() {
         return mounts;
+    }
+
+    @DataBoundSetter
+    public void setNoCleanup(boolean noCleanup) {
+        this.noCleanup = noCleanup;
+    }
+
+    @DataBoundSetter
+    public void setForce(boolean force) {
+        this.force = force;
+    }
+
+    @DataBoundSetter
+    public void setArgs(String args) {
+        this.args = args;
+    }
+
+    @DataBoundSetter
+    public void setMounts(String mounts) {
+        this.mounts = mounts;
     }
 
     @Override

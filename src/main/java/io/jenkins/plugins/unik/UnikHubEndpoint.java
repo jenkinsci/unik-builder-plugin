@@ -17,6 +17,7 @@ import jenkins.authentication.tokens.api.AuthenticationTokens;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
@@ -87,6 +88,7 @@ public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
         return (DescriptorImpl) super.getDescriptor();
     }
 
+    @Symbol("hub")
     @Extension
     public static class DescriptorImpl extends Descriptor<UnikHubEndpoint> {
 

@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.verb.POST;
 
@@ -30,11 +31,11 @@ public class PullImageCommand extends UnikCommand {
     private boolean force;
 
     @DataBoundConstructor
-    public PullImageCommand(String imageName, String provider, boolean force, UnikHubEndpoint unikHubEndpoint) {
+    public PullImageCommand(String imageName, String provider, UnikHubEndpoint unikHubEndpoint) {
         super(unikHubEndpoint);
         this.imageName = imageName;
         this.provider = provider;
-        this.force = force;
+        this.force = false;
     }
 
     public String getImageName() {
@@ -47,6 +48,11 @@ public class PullImageCommand extends UnikCommand {
 
     public boolean isForce() {
         return force;
+    }
+
+    @DataBoundSetter
+    public void setForce(boolean force) {
+        this.force = force;
     }
 
     @Override
