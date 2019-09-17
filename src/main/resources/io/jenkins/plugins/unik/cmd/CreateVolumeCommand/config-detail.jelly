@@ -1,4 +1,5 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core"
+         xmlns:f="/lib/form">
 
     <f:entry field="volumeName" title="${%volumenametitle}">
         <f:textbox default="" checkMethod="post"/>
@@ -18,15 +19,15 @@
 
     <f:advanced>
         <f:entry field="type" title="${%typetitle}">
-            <f:select />
+            <f:select/>
         </f:entry>
 
         <f:entry field="noCleanup" title="${%nocleanuptitle}">
-            <f:checkbox />
+            <f:checkbox/>
         </f:entry>
 
         <f:entry field="raw" title="${%rawtitle}">
-            <f:checkbox />
+            <f:checkbox/>
         </f:entry>
     </f:advanced>
 

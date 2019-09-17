@@ -2,7 +2,6 @@ package io.jenkins.plugins.unik.cmd;
 
 import hudson.Extension;
 import hudson.Launcher;
-import hudson.Util;
 import hudson.model.Item;
 import hudson.model.Run;
 import hudson.util.FormValidation;
@@ -79,21 +78,13 @@ public class CreateImageCommand extends UnikCommand {
         return noCleanup;
     }
 
-    public boolean isForce() {
-        return force;
-    }
-
-    public String getArgs() {
-        return args;
-    }
-
-    public String getMounts() {
-        return mounts;
-    }
-
     @DataBoundSetter
     public void setNoCleanup(boolean noCleanup) {
         this.noCleanup = noCleanup;
+    }
+
+    public boolean isForce() {
+        return force;
     }
 
     @DataBoundSetter
@@ -101,9 +92,17 @@ public class CreateImageCommand extends UnikCommand {
         this.force = force;
     }
 
+    public String getArgs() {
+        return args;
+    }
+
     @DataBoundSetter
     public void setArgs(String args) {
         this.args = args;
+    }
+
+    public String getMounts() {
+        return mounts;
     }
 
     @DataBoundSetter

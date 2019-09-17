@@ -5,7 +5,6 @@ import hudson.Launcher;
 import hudson.model.Item;
 import hudson.model.Run;
 import hudson.util.FormValidation;
-import io.jenkins.plugins.unik.UnikHubEndpoint;
 import io.jenkins.plugins.unik.log.ConsoleLogger;
 import io.jenkins.plugins.unik.utils.Resolver;
 import io.jenkins.plugins.unik.validator.ValidatorUtils;

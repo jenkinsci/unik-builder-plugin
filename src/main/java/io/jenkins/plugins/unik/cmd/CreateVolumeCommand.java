@@ -61,12 +61,27 @@ public class CreateVolumeCommand extends UnikCommand {
         return type;
     }
 
+    @DataBoundSetter
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public boolean isRaw() {
         return raw;
     }
 
+    @DataBoundSetter
+    public void setRaw(boolean raw) {
+        this.raw = raw;
+    }
+
     public boolean isNoCleanup() {
         return noCleanup;
+    }
+
+    @DataBoundSetter
+    public void setNoCleanup(boolean noCleanup) {
+        this.noCleanup = noCleanup;
     }
 
     public String getProvider() {
@@ -77,28 +92,13 @@ public class CreateVolumeCommand extends UnikCommand {
         return size;
     }
 
-    public String getData() {
-        return data;
-    }
-
-    @DataBoundSetter
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @DataBoundSetter
-    public void setRaw(boolean raw) {
-        this.raw = raw;
-    }
-
-    @DataBoundSetter
-    public void setNoCleanup(boolean noCleanup) {
-        this.noCleanup = noCleanup;
-    }
-
     @DataBoundSetter
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public String getData() {
+        return data;
     }
 
     @DataBoundSetter

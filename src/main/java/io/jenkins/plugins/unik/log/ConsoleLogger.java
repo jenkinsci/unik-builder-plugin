@@ -1,6 +1,5 @@
 package io.jenkins.plugins.unik.log;
 
-import hudson.model.BuildListener;
 import hudson.model.TaskListener;
 
 import java.io.IOException;

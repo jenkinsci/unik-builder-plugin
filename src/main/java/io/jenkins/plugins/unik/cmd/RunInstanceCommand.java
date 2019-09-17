@@ -62,25 +62,13 @@ public class RunInstanceCommand extends UnikCommand {
         return memoryMb;
     }
 
-    public boolean isNoCleanup() {
-        return noCleanup;
-    }
-
-    public boolean isDebug() {
-        return debug;
-    }
-
-    public String getEnvs() {
-        return envs;
-    }
-
-    public String getMounts() {
-        return mounts;
-    }
-
     @DataBoundSetter
     public void setMemoryMb(String memoryMb) {
         this.memoryMb = memoryMb;
+    }
+
+    public boolean isNoCleanup() {
+        return noCleanup;
     }
 
     @DataBoundSetter
@@ -88,14 +76,26 @@ public class RunInstanceCommand extends UnikCommand {
         this.noCleanup = noCleanup;
     }
 
+    public boolean isDebug() {
+        return debug;
+    }
+
     @DataBoundSetter
     public void setDebug(boolean debug) {
         this.debug = debug;
     }
 
+    public String getEnvs() {
+        return envs;
+    }
+
     @DataBoundSetter
     public void setEnvs(String envs) {
         this.envs = envs;
+    }
+
+    public String getMounts() {
+        return mounts;
     }
 
     @DataBoundSetter

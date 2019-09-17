@@ -1,6 +1,5 @@
 package io.jenkins.plugins.unik.cmd;
 
-import com.google.common.base.Strings;
 import hudson.DescriptorExtensionList;
 import hudson.ExtensionPoint;
 import hudson.Launcher;
@@ -27,15 +26,6 @@ import static jenkins.model.Jenkins.get;
 public abstract class UnikCommand implements Describable<UnikCommand>, ExtensionPoint {
 
     private UnikHubEndpoint unikHubEndpoint;
-
-    @DataBoundSetter
-    public void setUnikHubEndpoint(UnikHubEndpoint unikHubEndpoint) {
-        this.unikHubEndpoint = unikHubEndpoint;
-    }
-
-    public UnikHubEndpoint getUnikHubEndpoint() {
-        return unikHubEndpoint;
-    }
 
     /**
      * Get the descriptor list of all subtypes
@@ -66,6 +56,15 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
         } catch (IOException e) {
             throw new UnikException(e.getMessage());
         }
+    }
+
+    public UnikHubEndpoint getUnikHubEndpoint() {
+        return unikHubEndpoint;
+    }
+
+    @DataBoundSetter
+    public void setUnikHubEndpoint(UnikHubEndpoint unikHubEndpoint) {
+        this.unikHubEndpoint = unikHubEndpoint;
     }
 
     /**
