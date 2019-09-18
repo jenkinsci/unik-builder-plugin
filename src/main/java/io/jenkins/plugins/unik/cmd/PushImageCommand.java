@@ -35,7 +35,6 @@ public class PushImageCommand extends UnikCommand {
         return imageName;
     }
 
-
     @Override
     public void execute(Launcher launcher, Run<?, ?> run, ConsoleLogger console) throws UnikException {
         console.logInfo("Execute Command: " + getDescriptor().getDisplayName());

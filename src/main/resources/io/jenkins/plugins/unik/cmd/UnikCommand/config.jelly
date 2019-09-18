@@ -6,7 +6,7 @@
 
     <j:if test="${descriptor.showCredentials()}">
         <f:entry field="unikHubEndpoint">
-            <f:property field="" propertyDescriptor="${descriptor.unikHubEndpointDescriptor}"/>
+            <f:property field="unikHubEndpoint" propertyDescriptor="${descriptor.unikHubEndpointDescriptor}"/>
         </f:entry>
     </j:if>
 
