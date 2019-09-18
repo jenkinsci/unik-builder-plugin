@@ -6,20 +6,18 @@ import hudson.model.*;
 import hudson.security.ACL;
 import hudson.security.Permission;
 import io.jenkins.plugins.unik.UnikBuilder;
-import it.mathiasmah.junik.client.Client;
 import jenkins.model.Jenkins;
 import org.apache.commons.jelly.XMLOutput;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Jenkins action to add a 'Console Output' like page for the Unikernel instance output.
  */
-public class UnikInstanceConsoleAction extends TaskAction implements Serializable {
+public class UnikInstanceConsoleAction extends TaskAction {
 
     private static Logger LOGGER = Logger.getLogger(UnikInstanceConsoleAction.class.getName());
 
@@ -115,9 +113,12 @@ public class UnikInstanceConsoleAction extends TaskAction implements Serializabl
         @Override
         protected void perform(final TaskListener listener) throws Exception {
 
-            final Client client = ((UnikBuilder.DescriptorImpl) Jenkins.get().getDescriptor(UnikBuilder.class)).getUnikClient();
+            final UnikBuilder.DescriptorImpl descriptor = ((UnikBuilder.DescriptorImpl) Jenkins.get().getDescriptor(UnikBuilder.class));
 
-            client.instances().logToStream(instanceId, false, listener.getLogger());
+            if (descriptor != null) {
+                descriptor.getUnikClient().instances().logToStream(instanceId, false, listener.getLogger());
+
+            }
         }
     }
 }

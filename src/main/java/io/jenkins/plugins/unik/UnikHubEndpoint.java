@@ -20,11 +20,12 @@ import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.*;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> {
+public class UnikHubEndpoint extends AbstractDescribableImpl<UnikHubEndpoint> implements Serializable {
 
     private static Logger LOGGER = Logger.getLogger(UnikHubEndpoint.class.getName());
 

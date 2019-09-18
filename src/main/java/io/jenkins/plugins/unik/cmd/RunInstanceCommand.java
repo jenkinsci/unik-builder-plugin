@@ -120,7 +120,7 @@ public class RunInstanceCommand extends UnikCommand {
         final String memoryMbRawRes = Resolver.buildVar(run, memoryMb);
         int memoryMbRes;
         try {
-            memoryMbRes = Integer.valueOf(memoryMbRawRes);
+            memoryMbRes = Integer.parseInt(memoryMbRawRes);
             if (memoryMbRes <= 0) {
                 memoryMbRes = 0;
                 console.logWarn("Not a valid memory size " + memoryMbRes + ", will be ignored");

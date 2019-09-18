@@ -20,7 +20,6 @@ import org.kohsuke.stapler.StaplerRequest;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -75,7 +74,7 @@ public class UnikBuilder extends Builder implements SimpleBuildStep {
 
     @Symbol("unik")
     @Extension
-    public static final class DescriptorImpl extends BuildStepDescriptor<Builder> implements Serializable {
+    public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
         private Client unikClient;
         private String unikUrl;

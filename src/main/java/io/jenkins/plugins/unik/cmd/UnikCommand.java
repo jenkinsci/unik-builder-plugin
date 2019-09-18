@@ -17,13 +17,14 @@ import jenkins.model.Jenkins;
 import org.kohsuke.stapler.DataBoundSetter;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import static jenkins.model.Jenkins.get;
 
 /**
  * Abstract Describable that holds all the general implementation of a Unik Command
  */
-public abstract class UnikCommand implements Describable<UnikCommand>, ExtensionPoint {
+public abstract class UnikCommand implements Describable<UnikCommand>, ExtensionPoint, Serializable {
 
     private UnikHubEndpoint unikHubEndpoint;
 
@@ -75,7 +76,7 @@ public abstract class UnikCommand implements Describable<UnikCommand>, Extension
      */
     public Hub getUnikHubConfig(Run<?, ?> build) {
         if (unikHubEndpoint == null) {
-            new UnikHubEndpoint().getHub(build);
+            return new UnikHubEndpoint().getHub(build);
         }
 
         return unikHubEndpoint.getHub(build);

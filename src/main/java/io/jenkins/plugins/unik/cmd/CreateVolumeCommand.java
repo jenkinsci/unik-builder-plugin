@@ -123,7 +123,7 @@ public class CreateVolumeCommand extends UnikCommand {
         final String sizeRawRes = Resolver.buildVar(run, size);
         int sizeRes;
         try {
-            sizeRes = Integer.valueOf(sizeRawRes);
+            sizeRes = Integer.parseInt(sizeRawRes);
             if (sizeRes <= 0) {
                 sizeRes = 0;
                 console.logWarn("Not a valid volume size " + sizeRes + ", will be ignored");
@@ -138,7 +138,7 @@ public class CreateVolumeCommand extends UnikCommand {
         if (!raw && !StringUtils.isBlank(data)) {
             try {
                 console.logInfo("Create tar archive of " + dataRes);
-                dataRes = CompressUtils.CreateTarGz(dataRes, volumeName);
+                dataRes = CompressUtils.createTarGz(dataRes, volumeName);
             } catch (IOException e) {
                 LOGGER.log(Level.WARNING, "Could not create tar archive", e);
                 console.logWarn("Could not create tar archive, cause: " + e.getMessage());

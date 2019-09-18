@@ -145,7 +145,7 @@ public class CreateImageCommand extends UnikCommand {
         final String tarArchive;
         try {
             console.logInfo("Creating tar archive of " + unikFolderRes);
-            tarArchive = CompressUtils.CreateTarGz(unikFolderRes, imageNameRes);
+            tarArchive = CompressUtils.createTarGz(unikFolderRes, imageNameRes);
         } catch (IOException e) {
             throw new UnikException("Could not create archive", e);
         }
@@ -170,7 +170,9 @@ public class CreateImageCommand extends UnikCommand {
         console.logInfo(image.toString());
 
         //clean up
-        new File(tarArchive).delete();
+        if (!new File(tarArchive).delete()) {
+            console.logWarn("Could not clean up tar archive");
+        }
     }
 
     @Symbol("build")

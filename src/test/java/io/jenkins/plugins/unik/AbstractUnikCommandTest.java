@@ -59,7 +59,7 @@ public abstract class AbstractUnikCommandTest {
 
         //mock file access
         PowerMockito.mockStatic(CompressUtils.class);
-        Mockito.when(CompressUtils.CreateTarGz(any(), any())).thenReturn("test/path/image.tar.gz");
+        Mockito.when(CompressUtils.createTarGz(any(), any())).thenReturn("test/path/image.tar.gz");
     }
 
     void successTest(UnikCommand command) throws Exception {

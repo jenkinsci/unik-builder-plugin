@@ -28,7 +28,7 @@ public class CompressUtils {
      * @return the path to the archive
      * @throws IOException if some error occurs during compression
      */
-    public static String CreateTarGz(String path, String fileName) throws IOException {
+    public static String createTarGz(String path, String fileName) throws IOException {
         TarArchiveOutputStream tOut = null;
         try {
             String tarGzPath = path + File.separator + fileName + ".tar.gz";
