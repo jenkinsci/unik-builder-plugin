@@ -1,22 +1,35 @@
 package io.jenkins.plugins.unik;
 
 import io.jenkins.plugins.unik.cmd.PushImageCommand;
+import org.junit.Before;
 import org.junit.Test;
 
 public class PushImageCommandTest extends AbstractUnikCommandTest {
 
+    private UnikHubEndpoint hub;
+
+    @Before
+    @Override
+    public void setup() throws Exception {
+        super.setup();
+
+        hub = new UnikHubEndpoint();
+        hub.setCredentialsId("credentialsId");
+        hub.setUrl("url");
+    }
+
     @Test
     public void testBuildSuccess() throws Exception {
-        successTest(new PushImageCommand("imageName", new UnikHubEndpoint("url", "credentialsId")));
+        PushImageCommand command = new PushImageCommand("imageName");
+        command.setUnikHubEndpoint(hub);
+        successTest(command);
     }
 
     @Test
     public void testBuildMissingImageNameFailure() throws Exception {
-        failureTest(new PushImageCommand(null, new UnikHubEndpoint("url", "credentialsId")), "Image name can not be empty");
+        PushImageCommand command = new PushImageCommand(null);
+        command.setUnikHubEndpoint(hub);
+        failureTest(command, "Image name can not be empty");
     }
 
-    @Test
-    public void testBuildMissingHubConfigFailure() throws Exception {
-        failureTest(new PushImageCommand("imageName", null), "Hub config not valid");
-    }
 }

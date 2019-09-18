@@ -1,6 +1,5 @@
 package io.jenkins.plugins.unik;
 
-import io.jenkins.plugins.unik.cmd.CreateImageCommand;
 import io.jenkins.plugins.unik.cmd.CreateVolumeCommand;
 import org.junit.Test;
 
@@ -8,57 +7,103 @@ public class CreateVolumeCommandTest extends AbstractUnikCommandTest {
 
     @Test
     public void testBuildAllParamsSuccess() throws Exception {
-        successTest(new CreateVolumeCommand("volumeName", "ext2", true, true, "provider", "100", "data"));
+        CreateVolumeCommand command = new CreateVolumeCommand("volumeName", "provider");
+        command.setRaw(true);
+        command.setNoCleanup(true);
+        command.setType("ext2");
+        command.setSize("100");
+        command.setData("data");
+
+        successTest(command);
     }
 
     @Test
     public void testBuildMinimalWithDataParamsSuccess() throws Exception {
-        successTest(new CreateVolumeCommand("volumeName", "ext2", true, true, "provider", null, "data"));
+        CreateVolumeCommand command = new CreateVolumeCommand("volumeName", "provider");
+        command.setRaw(true);
+        command.setNoCleanup(true);
+        command.setType("ext2");
+        command.setSize(null);
+        command.setData("data");
+
+        successTest(command);
     }
 
 
     @Test
     public void testBuildMinimalWithSizeParamsSuccess() throws Exception {
-        successTest(new CreateVolumeCommand("volumeName", "ext2", false, true, "provider", "100", null));
+        CreateVolumeCommand command = new CreateVolumeCommand("volumeName", "provider");
+        command.setRaw(false);
+        command.setNoCleanup(true);
+        command.setType("ext2");
+        command.setSize("100");
+        command.setData(null);
+        successTest(command);
     }
 
     @Test
     public void testBuildSizeNaNSuccess() throws Exception {
-        successTest(new CreateVolumeCommand("volumeName", "ext2", false, true, "provider", "NaN", "data"), "Not a valid volume size");
+        CreateVolumeCommand command = new CreateVolumeCommand("volumeName", "provider");
+        command.setRaw(false);
+        command.setNoCleanup(true);
+        command.setType("ext2");
+        command.setSize("NaN");
+        command.setData("data");
+        successTest(command, "Not a valid volume size");
     }
 
     @Test
     public void testBuildSizeNegativeSuccess() throws Exception {
-        successTest(new CreateVolumeCommand("volumeName", "ext2", false, true, "provider", "-1", "data"), "Not a valid volume size");
+        CreateVolumeCommand command = new CreateVolumeCommand("volumeName", "provider");
+        command.setRaw(true);
+        command.setNoCleanup(true);
+        command.setType("ext2");
+        command.setSize("-1");
+        command.setData("data");
+        successTest(command, "Not a valid volume size");
     }
 
     @Test
     public void testBuildMissingDataAndInvalidSizeFailure() throws Exception {
-        failureTest(new CreateVolumeCommand("volumeName", "ext2", true, true, "provider", "NaN", null), "Either a data or a volume size greater 0 must be specified");
+        CreateVolumeCommand command = new CreateVolumeCommand("volumeName", "provider");
+        command.setRaw(true);
+        command.setNoCleanup(true);
+        command.setType("ext2");
+        command.setSize("NaN");
+        command.setData(null);
+        failureTest(command, "Either a data or a volume size greater 0 must be specified");
     }
 
     @Test
     public void testBuildMissingDataAndSizeFailure() throws Exception {
-        failureTest(new CreateVolumeCommand("volumeName", "ext2", true, true, "provider", null, null), "Either a data or a volume size greater 0 must be specified");
+        CreateVolumeCommand command = new CreateVolumeCommand("volumeName", "provider");
+        command.setRaw(true);
+        command.setNoCleanup(true);
+        command.setType("ext2");
+        command.setSize(null);
+        command.setData(null);
+        failureTest(command, "Either a data or a volume size greater 0 must be specified");
     }
 
     @Test
     public void testBuildMissingVolumeNameFailure() throws Exception {
-        failureTest(new CreateVolumeCommand(null, "ext2", true, true, "provider", "100", null), "Volume name can not be empty");
+        CreateVolumeCommand command = new CreateVolumeCommand(null, "provider");
+        command.setRaw(true);
+        command.setNoCleanup(true);
+        command.setType("ext2");
+        command.setSize("100");
+        command.setData(null);
+        failureTest(command, "Volume name can not be empty");
     }
 
     @Test
     public void testBuildMissingProviderFailure() throws Exception {
-        failureTest(new CreateImageCommand("folder", "imageName", null, "base", "language", false, false, null, null), "Provider can not be empty");
-    }
-
-    @Test
-    public void testBuildMissingBaseFailure() throws Exception {
-        failureTest(new CreateImageCommand("folder", "imageName", "provider", null, "language", false, false, null, null), "Unikernel base can not be empty");
-    }
-
-    @Test
-    public void testBuildMissingLanguageFailure() throws Exception {
-        failureTest(new CreateImageCommand("folder", "imageName", "provider", "base", null, false, false, null, null), "Language can not be empty");
+        CreateVolumeCommand command = new CreateVolumeCommand("volumeName", null);
+        command.setRaw(true);
+        command.setNoCleanup(true);
+        command.setType("ext2");
+        command.setSize("100");
+        command.setData("data");
+        failureTest(command, "Provider can not be empty");
     }
 }

@@ -7,11 +7,15 @@ public class RemoveVolumeCommandTest extends AbstractUnikCommandTest {
 
     @Test
     public void testBuildSuccess() throws Exception {
-        successTest(new RemoveVolumeCommand("volumeName", true));
+        RemoveVolumeCommand command = new RemoveVolumeCommand("volumeName");
+        command.setForce(true);
+        successTest(command);
     }
 
     @Test
     public void testBuildMissingVolumeNameFailure() throws Exception {
-        failureTest(new RemoveVolumeCommand(null, true), "Volume name can not be empty");
+        RemoveVolumeCommand command = new RemoveVolumeCommand(null);
+        command.setForce(true);
+        failureTest(command, "Volume name can not be empty");
     }
 }

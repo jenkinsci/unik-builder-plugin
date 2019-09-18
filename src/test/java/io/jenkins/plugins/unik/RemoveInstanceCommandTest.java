@@ -7,11 +7,15 @@ public class RemoveInstanceCommandTest extends AbstractUnikCommandTest {
 
     @Test
     public void testBuildSuccess() throws Exception {
-        successTest(new RemoveInstanceCommand("instanceName", true));
+        RemoveInstanceCommand command = new RemoveInstanceCommand("instanceName");
+        command.setForce(true);
+        successTest(command);
     }
 
     @Test
     public void testBuildMissingInstanceNameFailure() throws Exception {
-        failureTest(new RemoveInstanceCommand(null, true), "Instance name can not be empty");
+        RemoveInstanceCommand command = new RemoveInstanceCommand(null);
+        command.setForce(true);
+        failureTest(command, "Instance name can not be empty");
     }
 }

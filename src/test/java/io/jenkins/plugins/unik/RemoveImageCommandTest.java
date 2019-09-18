@@ -7,11 +7,15 @@ public class RemoveImageCommandTest extends AbstractUnikCommandTest {
 
     @Test
     public void testBuildSuccess() throws Exception {
-        successTest(new RemoveImageCommand("imageName", true));
+        RemoveImageCommand command = new RemoveImageCommand("imageName");
+        command.setForce(true);
+        successTest(command);
     }
 
     @Test
     public void testBuildMissingImageNameFailure() throws Exception {
-        failureTest(new RemoveImageCommand(null, true), "Image name can not be empty");
+        RemoveImageCommand command = new RemoveImageCommand(null);
+        command.setForce(true);
+        failureTest(command, "Image name can not be empty");
     }
 }

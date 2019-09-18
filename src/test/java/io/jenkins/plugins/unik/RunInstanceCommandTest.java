@@ -7,32 +7,64 @@ public class RunInstanceCommandTest extends AbstractUnikCommandTest {
 
     @Test
     public void testBuildAllParamsSuccess() throws Exception {
-        successTest(new RunInstanceCommand("instanceName", "imageName", "100", true, true, "key1=value1 key2=value2", "volume1:mount1 volume2:mount2"));
+        RunInstanceCommand command = new RunInstanceCommand("istanceName", "imageName");
+        command.setDebug(true);
+        command.setNoCleanup(true);
+        command.setEnvs("key1=value1 key2=value2");
+        command.setMounts("volume1:mount1 volume2:mount2");
+        command.setMemoryMb("100");
+        successTest(command);
     }
 
     @Test
     public void testBuildMinimalParamsSuccess() throws Exception {
-        successTest(new RunInstanceCommand("instanceName", "imageName", null, true, true, null, null));
+        RunInstanceCommand command = new RunInstanceCommand("istanceName", "imageName");
+
+        successTest(command);
     }
 
     @Test
     public void testBuildMemorySizeNaNSuccess() throws Exception {
-        successTest(new RunInstanceCommand("instanceName", "imageName", "NaN", true, true, null, null), "Not a valid memory size");
+        RunInstanceCommand command = new RunInstanceCommand("istanceName", "imageName");
+        command.setDebug(true);
+        command.setNoCleanup(true);
+        command.setEnvs("key1=value1 key2=value2");
+        command.setMounts("volume1:mount1 volume2:mount2");
+        command.setMemoryMb("NaN");
+        successTest(command, "Not a valid memory size");
     }
 
     @Test
     public void testBuildMemorySizeNegativeSuccess() throws Exception {
-        successTest(new RunInstanceCommand("instanceName", "imageName", "-1", true, true, null, null), "Not a valid memory size");
+        RunInstanceCommand command = new RunInstanceCommand("istanceName", "imageName");
+        command.setDebug(true);
+        command.setNoCleanup(true);
+        command.setEnvs("key1=value1 key2=value2");
+        command.setMounts("volume1:mount1 volume2:mount2");
+        command.setMemoryMb("-1");
+        successTest(command, "Not a valid memory size");
     }
 
     @Test
     public void testBuildMissingInstanceNameFailure() throws Exception {
-        failureTest(new RunInstanceCommand(null, "imageName", null, true, true, null, null), "Instance name can not be empty");
+        RunInstanceCommand command = new RunInstanceCommand(null, "imageName");
+        command.setDebug(true);
+        command.setNoCleanup(true);
+        command.setEnvs("key1=value1 key2=value2");
+        command.setMounts("volume1:mount1 volume2:mount2");
+        command.setMemoryMb("100");
+        failureTest(command, "Instance name can not be empty");
     }
 
     @Test
     public void testBuildMissingImageNameFailure() throws Exception {
-        failureTest(new RunInstanceCommand("instanceName", null, null, true, true, null, null), "Image name can not be empty");
+        RunInstanceCommand command = new RunInstanceCommand("istanceName", null);
+        command.setDebug(true);
+        command.setNoCleanup(true);
+        command.setEnvs("key1=value1 key2=value2");
+        command.setMounts("volume1:mount1 volume2:mount2");
+        command.setMemoryMb("100");
+        failureTest(command, "Image name can not be empty");
     }
 
 }

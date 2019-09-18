@@ -7,36 +7,68 @@ public class CreateImageCommandTest extends AbstractUnikCommandTest {
 
     @Test
     public void testBuildAllParamsSuccess() throws Exception {
-        successTest(new CreateImageCommand("folder", "imageName", "provider", "base", "language", true, true, "arg1 arg2", "mount1 mount2"));
+        CreateImageCommand command = new CreateImageCommand("folder", "imageName", "provider", "base", "language");
+        command.setForce(true);
+        command.setNoCleanup(true);
+        command.setArgs("arg1 arg2");
+        command.setMounts("mount1 mount2");
+        successTest(command);
     }
 
     @Test
     public void testBuildMinimalParamsSuccess() throws Exception {
-        successTest(new CreateImageCommand("folder", "imageName", "provider", "base", "language", false, false, null, null));
+        CreateImageCommand command = new CreateImageCommand("folder", "imageName", "provider", "base", "language");
+
+        successTest(command);
     }
 
     @Test
     public void testBuildMissingUnikFolderFailure() throws Exception {
-        failureTest(new CreateImageCommand(null, "imageName", "provider", "base", "language", false, false, null, null), "Application location can not be empty");
+        CreateImageCommand command = new CreateImageCommand(null, "imageName", "provider", "base", "language");
+        command.setForce(true);
+        command.setNoCleanup(true);
+        command.setArgs("arg1 arg2");
+        command.setMounts("mount1 mount2");
+        failureTest(command, "Application location can not be empty");
     }
 
     @Test
     public void testBuildMissingImageNameFailure() throws Exception {
-        failureTest(new CreateImageCommand("folder", null, "provider", "base", "language", false, false, null, null), "Image name can not be empty");
+        CreateImageCommand command = new CreateImageCommand("folder", null, "provider", "base", "language");
+        command.setForce(true);
+        command.setNoCleanup(true);
+        command.setArgs("arg1 arg2");
+        command.setMounts("mount1 mount2");
+        failureTest(command, "Image name can not be empty");
     }
 
     @Test
     public void testBuildMissingProviderFailure() throws Exception {
-        failureTest(new CreateImageCommand("folder", "imageName", null, "base", "language", false, false, null, null), "Provider can not be empty");
+        CreateImageCommand command = new CreateImageCommand("folder", "imageName", null, "base", "language");
+        command.setForce(true);
+        command.setNoCleanup(true);
+        command.setArgs("arg1 arg2");
+        command.setMounts("mount1 mount2");
+        failureTest(command, "Provider can not be empty");
     }
 
     @Test
     public void testBuildMissingBaseFailure() throws Exception {
-        failureTest(new CreateImageCommand("folder", "imageName", "provider", null, "language", false, false, null, null), "Unikernel base can not be empty");
+        CreateImageCommand command = new CreateImageCommand("folder", "imageName", "provider", null, "language");
+        command.setForce(true);
+        command.setNoCleanup(true);
+        command.setArgs("arg1 arg2");
+        command.setMounts("mount1 mount2");
+        failureTest(command, "Unikernel base can not be empty");
     }
 
     @Test
     public void testBuildMissingLanguageFailure() throws Exception {
-        failureTest(new CreateImageCommand("folder", "imageName", "provider", "base", null, false, false, null, null), "Language can not be empty");
+        CreateImageCommand command = new CreateImageCommand("folder", "imageName", "provider", "base", null);
+        command.setForce(true);
+        command.setNoCleanup(true);
+        command.setArgs("arg1 arg2");
+        command.setMounts("mount1 mount2");
+        failureTest(command, "Language can not be empty");
     }
 }

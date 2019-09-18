@@ -25,19 +25,60 @@ public class UnikBuilderConfigTest {
 
     @Parameterized.Parameters
     public static Collection commands() {
+
+        CreateImageCommand createImageCommand = new CreateImageCommand("folder", "imageName", "provider", "base", "language");
+        createImageCommand.setForce(true);
+        createImageCommand.setNoCleanup(true);
+        createImageCommand.setArgs("arg1 arg2");
+        createImageCommand.setMounts("mount1 mount2");
+
+        CreateVolumeCommand createVolumeCommand = new CreateVolumeCommand("volumeName", "provider");
+        createVolumeCommand.setRaw(true);
+        createVolumeCommand.setNoCleanup(true);
+        createVolumeCommand.setType("ext2");
+        createVolumeCommand.setSize("100");
+        createVolumeCommand.setData("data");
+
+        UnikHubEndpoint hub = new UnikHubEndpoint();
+        hub.setCredentialsId("credentialsId");
+        hub.setUrl("url");
+
+        PullImageCommand pullImageCommand = new PullImageCommand("imageName", "provider");
+        pullImageCommand.setForce(true);
+        pullImageCommand.setUnikHubEndpoint(hub);
+
+        PushImageCommand pushImageCommand = new PushImageCommand("imageName");
+        pushImageCommand.setUnikHubEndpoint(hub);
+
+        RemoveImageCommand removeImageCommand = new RemoveImageCommand("imageName");
+        removeImageCommand.setForce(true);
+
+        RemoveInstanceCommand removeInstanceCommand = new RemoveInstanceCommand("instanceName");
+        removeInstanceCommand.setForce(true);
+
+        RemoveVolumeCommand removeVolumeCommand = new RemoveVolumeCommand("volumeName");
+        removeVolumeCommand.setForce(true);
+
+        RunInstanceCommand runInstanceCommand = new RunInstanceCommand("istanceName", "imageName");
+        runInstanceCommand.setDebug(true);
+        runInstanceCommand.setNoCleanup(true);
+        runInstanceCommand.setEnvs("key1=value1 key2=value2");
+        runInstanceCommand.setMounts("volume1:mount1 volume2:mount2");
+        runInstanceCommand.setMemoryMb("100");
+
         return Arrays.asList(
                 new AttachVolumeCommand("testVolume", "instanceId", "mountPoint"),
-                new CreateImageCommand("folder", "imageName", "provider", "base", "language", true, true, "arg1 arg2", "mount1 mount2"),
-                new CreateVolumeCommand("volumeName", "ext2", true, true, "provider", "100", "data"),
+                createImageCommand,
+                createVolumeCommand,
                 new DetachVolumeCommand("volumeName"),
-                new RemoveImageCommand("imageName", true),
-                new RemoveInstanceCommand("instanceName", true),
-                new RemoveVolumeCommand("volumeName", true),
-                new RunInstanceCommand("instanceName", "imageName", "100", true, true, "key1=value1 key2=value2", "volume1:mount1 volume2:mount2"),
+                removeImageCommand,
+                removeInstanceCommand,
+                removeVolumeCommand,
+                runInstanceCommand,
                 new StartInstanceCommand("instanceName"),
                 new StopInstanceCommand("instanceName"),
-                new PullImageCommand("imageName", "provider", true, new UnikHubEndpoint("url", "credentialsId")),
-                new PushImageCommand("imageName", new UnikHubEndpoint("url", "credentialsId"))
+                pullImageCommand,
+                pushImageCommand
         );
     }
 
